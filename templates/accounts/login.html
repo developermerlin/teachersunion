@@ -1,0 +1,156 @@
+{% load static %}
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<title>Sign-In</title>
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name=description content="this is meta description">
+<meta name=author content="Themefisher">
+<meta name=generator content="Hugo 0.92.0">
+<link rel=stylesheet href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+<link rel=stylesheet href="{% static 'plugins/themify/css/themify-icons.css' %}">
+<link rel=stylesheet href="{% static 'plugins/magnific-popup/magnific-popup.css' %}">
+<link rel=stylesheet href="{% static 'plugins/slick/slick.css' %}">
+<link rel=stylesheet href="{% static 'plugins/aos/aos.css' %}">
+<link rel=stylesheet href="{% static 'scss/style.min.css' %}" media=screen>
+<link rel="shortcut icon" href=../images/favicon.html type=image/x-icon>
+<link rel=icon href=../images/favicon.html type=image/x-icon>
+</head><body>
+<div class=preloader>
+</div>
+<header class=navigation>
+<div class="header-top d-none d-md-block d-lg-block">
+<div class=container>
+<div class="row justify-content-between align-items-center">
+
+</div>
+</div>
+</div>
+<nav class="navbar navbar-expand-lg main-nav py-3" id=navbar>
+<div class=container>
+<a class=navbar-brand href="{% url 'home1' %}"><img style="width: 50px; margin-right: 5px;"  src="{% static 'images/sltu-logo.jpg' %}"  class=img-fluid>Teachers Union</a>
+<button class="navbar-toggler collapsed" type=button data-toggle=collapse data-target=#navigation aria-controls=navigation aria-expanded=false aria-label="Toggle navigation">
+<span class=ti-menu></span>
+</button>
+<div class="collapse navbar-collapse" id=navigation>
+<ul class="navbar-nav ml-auto text-center text-lg-left">
+
+
+</ul>
+
+<div class="text-center text-lg-left">
+<a href="{% url 'home1' %}" class="quote-btn ml-4 bg-primary text-white rounded-btn letter-spacing text-uppercase">Back
+<i class=ti-angle-left></i></a>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class=main-wrapper>
+<section class="page-title bg-cover" style="background-image: url('{% static 'images/bg/headoffice.jpg' %}'), url('{% static 'images/bg/newbuilding.jpg' %}'); background-size: cover; background-repeat: no-repeat;">
+<div class=container style="margin-top: 50px;">
+<div style="margin-top: -140px; margin-bottom: -100px;" class=row>
+<div class=col-md-12>
+<div class=text-center>
+<h1 class="text-capitalize mb-4 text-lg">Sign In</h1>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<div class=container>
+
+<div class="row justify-content-center">
+<div class="col-md-6 text-center mt-4">
+<form method=post action=#>
+<h3 class=text-md>Sign In</h3>
+<p>Enter your correct login details</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <input type="text" name="username" class="form-control" placeholder="username" >
+        </div>
+        <div class="mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+
+        <div class="mb-3 w-100">
+            {% if messages %}
+           
+                {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                    <strong>{{ message }}</strong> 
+                    
+                </div>
+                    
+                {% endfor %}
+            
+            {% endif %}
+        </div>
+
+    
+        <div class="form-group-2 mb-4">
+            <button class="btn btn-main" name=submit type=submit>Sign In</button>
+        </div>
+      </form>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>var indexURL="https://demo.gethugothemes.com/enov/site/index.json"</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+<script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+<script src="{% static 'plugins/shuffle/shuffle.min.js' %}"></script>
+<script src="{% static 'plugins/aos/aos.js' %}"></script>
+<script src="{% static 'plugins/search/fuse.min.js' %}"></script>
+<script src="{% static 'plugins/search/mark.js' %}"></script>
+<script src="{% static 'plugins/search/search.js' %}"></script>
+<script src="{% static 'plugins/google-map/map.js' %}"></script>
+<script src="{% static 'js/script.min.js' %}"></script>
+
+<script>
+    setTimeout(function() {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.classList.remove('show');
+            alert.classList.add('fade');
+            setTimeout(function() {
+                alert.remove();
+            }, 150); // Adjust this timing as needed
+        }
+    }, 3000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+</script>
+
+</body>
+
+</html>
