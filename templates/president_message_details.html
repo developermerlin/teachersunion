@@ -46,7 +46,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="{% url 'finance' %}">
+                <a href="{% url 'president' %}">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -109,7 +109,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -117,23 +117,25 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="form-picker.html">Picker</a></li>
+                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Data Table</a></li>
+                            <li><a href="table-datatable.html">Administration</a></li>
+                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+
                         </ul>
                     </li>
                 </ul>
@@ -175,81 +177,34 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3 style="text-align: center;">Teacher's Information</h3>
-                                <h2>{{ teacher.name }}</h2>
+                                <h3 style="text-align: center;">Message Details</h3>
+                                
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Date of Birth:</strong> {{ teacher.dob }}</p>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Gender:</strong> {{ teacher.get_gender_display }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>District:</strong> {{ teacher.district }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Province:</strong> {{ teacher.province }}</p>
-
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Pin Code:</strong> {{ teacher.pin_code }}</p>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Subjects Taught:</strong> {{ teacher.subjects_taught }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Schools Taught:</strong> {{ teacher.schools_taught }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Email:</strong> {{ teacher.email }}</p>
+                                        <p style="font-size: 18px;"><strong>Date of Message</strong> {{ president.message_date }}</p>
 
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Phone Number:</strong> {{ teacher.phone_number }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Address:</strong> {{ teacher.address }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Years of Service: </strong> {{ teacher.time_of_service }} Years</p>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {% if teacher.profile_picture %}
-                                        <img src="{{ teacher.profile_picture.url }}" alt="Profile Image" style="width: 200px; height: 200px; border-radius: 100px;">
-                                    {% else %}
-                                        <p>No Profile Image</p>
-                                    {% endif %}
+                                        <p style="font-size: 18px;"><strong>Message Subject:</strong> {{ president.message_subject }}</p>
+    
                                     </div>
                                 </div>
-                              
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Message Body:</strong> {{ president.message_body }}</p>
+    
+                                    </div>
+                                </div>
                                 <div>
                                     
                             
                                    
                             
-                                    <a href="{% url 'finance_teachers' %}" class="btn btn-success mt-4">Back to Teachers List</a>
+                                    <a href="{% url 'president_messages' %}" class="btn btn-success mt-4">Back to Messages</a>
                                 </div>
                                 
                             </div>

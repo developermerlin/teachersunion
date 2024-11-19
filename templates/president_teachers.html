@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,30 +103,23 @@
         ***********************************-->
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu1">
+                <ul class="metismenu" id="menu">
                     <li>
-                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'secretary' %}" style="font-size: 14px;">Dashboard</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
-                   
-                </ul>
-
-
-                <ul class="metismenu" id="menu">
-                    <li>
-                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="menu-icon"></i><span class="nav-text">Teachers</span>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_teachers' %}" style="font-size: 14px;">Add Teachers</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
-
-
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
@@ -134,7 +128,16 @@
                             <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
-                   
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="table-datatable.html">Administration</a></li>
+                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -174,8 +177,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>All Recurrent Budgets</h3>
-                                
+                                <h3>Teachers</h3>
+                               
                                 {% if messages %}
                                 <ul>
                                     {% for message in messages %}
@@ -193,27 +196,36 @@
                                         <thead>
                                             <tr>
                                                 <th style="font-size: 16px; color:black; text-align: center;">No</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Budget Description</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Budget Date</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Img</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Name</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Pin Code</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Address</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Contact</th>
                                                 <th style="font-size: 16px; color:black; text-align: center;">Action</th>
                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for bud in budget %}
+                                            {% for teach in teachers %}
                                             
                                             <tr>
                                                 <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">
+                                                    {% if teach.profile_picture %}
+                                                        <img src="{{ teach.profile_picture.url }}" alt="Profile Image" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    {% else %}
+                                                        No Image
+                                                    {% endif %}
+                                                </td>
                                                 
-                                                <td style="font-size: 16px; color:black; text-align:center">{{bud.name}}</td>
-                                                <td style="font-size: 16px; color:black; text-align:center">{{bud.budget_date}}</td>
-                                                
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.name}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.pin_code}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.address}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.phone_number}}</td>
                                               
                                                 <td style="text-align: center;">
-                                                    
-
-                                                      <a href="{% url 'president_budget_details' bud.id %}" >
-                                                        View 
+                                                   
+                                                      <a href="{% url 'president_teachers_details' teach.id %}" >View
                                                         <i class="fas fa-eye" style="color: rgb(12, 12, 125); margin-left: 5px;"></i>
                                                       </a>
                                                 </td>
@@ -222,7 +234,16 @@
                                           {% endfor %}
                                         </tbody>
                                         <tfoot>
-                                        
+                                            <tr>
+                                                <th style="font-size: 16px; color:black; text-align: center;">No</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Img</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Name</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Pin Code</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Address</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Contact</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Action</th>
+                                               
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -232,7 +253,132 @@
 
 
 
- 
+                  
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Teachers</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                           <small>Upload Teacher's photo</small>
+                            <input class="form-control shadow-none p-2" name="profile_picture" type="file" id="formFile" style="border: 1px solid black;">
+                        </div>
+            
+
+                        <div class="col-md-4 mt-4">
+                            <!-- File input for product image -->
+                            <input class="form-control shadow-none p-2" name="name" type="text" placeholder="Full Name" style="border: 1px solid black;">
+                        </div>
+
+                        <div class="col-md-4">
+                            <small>Date of Birth</small>
+                            <input class="form-control shadow-none p-2" name="dob" type="date" placeholder="Date of Birth" style="border: 1px solid black;">
+                        </div>
+                       
+                    </div>
+            
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <select class="form-control shadow-none p-2" name="gender" style="border: 1px solid black;" required>
+                                <option value="">Select Gender</option>
+                                {% for code, label in gender_choices %}
+                                    <option value="{{ code }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+
+                        <div class="col-md-4">
+                            <select class="form-control shadow-none p-2" name="district" style="border: 1px solid black;" required>
+                                <option value="">Select District</option>
+                                {% for district, label in district_choices %}
+                                    <option value="{{ district }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+
+                        <div class="col-md-4">
+                            <select class="form-control shadow-none p-2" name="province" style="border: 1px solid black;" required>
+                                <option value="">Select Province</option>
+                                {% for province, label in province_choices %}
+                                    <option value="{{ province }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+
+
+                      
+                    </div>
+            
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control shadow-none p-4" name="pin_code" placeholder="Pincode" style="border: 1px solid black;" required>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <input type="email" class="form-control shadow-none p-4" name="email" placeholder="Email" style="border: 1px solid black;" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="number" class="form-control shadow-none p-4" name="phone_number" style="border: 1px solid black;" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+            
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <textarea name="subjects_taught" id="" cols="40" rows="6" class="form-control"  style="border: 1px solid black;"placeholder="Number of subjects Taught...."></textarea>
+                        </div>
+
+
+                        <div class="col-md-6">
+                           <textarea name="schools_taught" id="" cols="40" rows="6" class="form-control" style="border: 1px solid black;" placeholder="Number of Schools Taught...."></textarea>
+                        </div>
+            
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-3">
+                            <input type="text" name="address" class="form-control" placeholder="address" style="border: 1px solid black;">
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-3">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                <i class="fas fa-database"></i> Add Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                  
+              
+
+            
+            
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
                 </div>
             </div>
            
@@ -300,9 +446,9 @@
                 alert.classList.add('fade');
                 setTimeout(function() {
                     alert.remove();
-                }, 150); 
+                }, 150); // Adjust this timing as needed
             }
-        }, 2000); 
+        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
     </script>
 
 </body>

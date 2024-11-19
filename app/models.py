@@ -103,5 +103,20 @@ class Budget(models.Model):
             self.berievement
         )
 
+class President_Message(models.Model):
+    message_date = models.DateField()
+    message_subject = models.CharField(max_length=300)
+    message_body = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return  self.message_subject
+    
+class Finance_Message(models.Model):
+    message_date = models.DateField()
+    message_subject = models.CharField(max_length=300)
+    message_body = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return  self.message_subject
 
 

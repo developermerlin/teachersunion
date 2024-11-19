@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +45,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="{% url 'finance' %}">
+                <a href="index-2.html">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -103,39 +102,29 @@
         ***********************************-->
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu">
+                <ul class="metismenu" id="menu1">
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
+                            <li><a href="{% url 'secretary' %}" style="font-size: 14px;">Dashboard</a></li>
                         </ul>
                     </li>
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
-                        </ul>
-                    </li>
+                   
+                </ul>
+
+
+                <ul class="metismenu" id="menu">
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
+                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="form-picker.html">Picker</a></li>
+                            <li><a href="{% url 'teachers' %}" style="font-size: 14px;">Add Teachers</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Data Table</a></li>
-                        </ul>
-                    </li>
+                   
                 </ul>
             </div>
         </div>
@@ -175,83 +164,58 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3 style="text-align: center;">Teacher's Information</h3>
-                                <h2>{{ teacher.name }}</h2>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Date of Birth:</strong> {{ teacher.dob }}</p>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Gender:</strong> {{ teacher.get_gender_display }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>District:</strong> {{ teacher.district }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Province:</strong> {{ teacher.province }}</p>
-
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Pin Code:</strong> {{ teacher.pin_code }}</p>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Subjects Taught:</strong> {{ teacher.subjects_taught }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Schools Taught:</strong> {{ teacher.schools_taught }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Email:</strong> {{ teacher.email }}</p>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Phone Number:</strong> {{ teacher.phone_number }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Address:</strong> {{ teacher.address }}</p>
-
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <p style="font-size: 18px;"><strong>Years of Service: </strong> {{ teacher.time_of_service }} Years</p>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {% if teacher.profile_picture %}
-                                        <img src="{{ teacher.profile_picture.url }}" alt="Profile Image" style="width: 200px; height: 200px; border-radius: 100px;">
-                                    {% else %}
-                                        <p>No Profile Image</p>
-                                    {% endif %}
-                                    </div>
-                                </div>
-                              
-                                <div>
-                                    
-                            
-                                   
-                            
-                                    <a href="{% url 'finance_teachers' %}" class="btn btn-success mt-4">Back to Teachers List</a>
-                                </div>
+                                <h3>Edit Message</h3>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="container">
+                    
+                                        <div class="row">
+                                            <div class="col-md-6 offset-md-3">
+                                                <small>Message Date</small>
+                                                <input class="form-control shadow-none p-2" name="message_date" type="date" value="{{message.message_date|date:'Y-m-d'}}" placeholder="Date of Message" style="border: 1px solid black;">
+                                            </div>
+                                        </div>
+                    
+                                        <div class="row">
+                                            <div class="col-md-6 mt-4 offset-md-3">
+                                                <!-- File input for product image -->
+                                                <input class="form-control shadow-none p-2" name="message_subject" value="{{message.message_subject}}" type="text" placeholder="Full Name" style="border: 1px solid black;">
+                                            </div>
+                                        </div>
                                 
+                                
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 offset-md-3">
+                                                <textarea 
+                                                    name="message_body" 
+                                                    id="" 
+                                                    cols="40" 
+                                                    rows="6" 
+                                                    class="form-control" 
+                                                    style="border: 1px solid black;" 
+                                                    placeholder="Message..."
+                                                >{{ message.message_body }}</textarea>
+                                            </div>
+                                        </div>
+                                        
+                    
+                    
+                                       
+                    
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 offset-md-3">
+                                                <!-- Submit button -->
+                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                                    <i class="fas fa-database"></i> Update Message
+                                                </button>
+
+                                                <a href="{% url 'president_messages' %}" type="submit" class="btn btn-danger mt-3 p-3 w-100 text-white">
+                                                     BACK
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -314,6 +278,9 @@
     <!-- ChartistJS -->
     <script src="{% static 'plugins1/chartist/js/chartist.min.j' %}s"></script>
     <script src="{% static 'plugins1/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/datatable/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/datatable-init/datatable-basic.min.js' %}"></script>
 
 
 

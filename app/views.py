@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from datetime import datetime
-from .models import Teacher, Budget
+from .models import Teacher, Budget, President_Message
 # Create your views here.
 
 def home1(request):
@@ -353,3 +353,141 @@ def president_budget(request):
     return render(request, 'president_budget.html', {
         'budget': budget,
     })
+
+
+def president_budget_details(request, budget_id):
+    # Get the teacher object by its id
+    budget = get_object_or_404(Budget, id=budget_id)
+    total_budget = budget.get_total_budget()
+    
+    return render(request, 'president_budget_details.html', {'budget': budget,'total_budget':total_budget})
+
+
+def president_teachers(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        dob = request.POST.get('dob')
+        gender = request.POST.get('gender')
+        district = request.POST.get('district')
+        province = request.POST.get('province')
+        pin_code = request.POST.get('pin_code')
+        subjects_taught = request.POST.get('subjects_taught')
+        schools_taught = request.POST.get('schools_taught')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        profile_picture = request.FILES.get('profile_picture')
+
+        try:
+            teacher = Teacher(
+                name=name,
+                dob=datetime.strptime(dob, '%Y-%m-%d').date(),
+                gender=gender,
+                district=district,
+                province=province,
+                pin_code=pin_code,
+                subjects_taught=subjects_taught,
+                schools_taught=schools_taught,
+                email=email,
+                phone_number=phone_number,
+                address=address,
+                profile_picture=profile_picture
+            )
+            teacher.save()
+            messages.success(request, "Teacher added successfully!")
+            return redirect('president_teachers')  # Adjust redirect to your desired view
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+            return redirect('president_teachers')
+
+    # Fetch all teacher records
+    teachers = Teacher.objects.all()
+
+
+    gender_choices = Teacher.gender_choices
+    district_choices = Teacher.district_choices
+    province_choices = Teacher.province_choices
+
+    return render(request, 'president_teachers.html', {
+        'gender_choices': gender_choices,
+        'district_choices': district_choices,
+        'province_choices': province_choices,
+        'teachers': teachers,
+    })
+
+
+def president_teachers_details(request, teacher_id):
+    # Get the teacher object by its id
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    
+    return render(request, 'president_teachers_details.html', {'teacher': teacher})
+
+def president_messages(request):
+    if request.method == 'POST':
+        message_date = request.POST.get('message_date')
+        message_subject = request.POST.get('message_subject')
+        message_body = request.POST.get('message_body')
+       
+
+
+        try:
+            message = President_Message(
+                message_subject=message_subject,
+                message_date=datetime.strptime(message_date, '%Y-%m-%d').date(),
+                message_body=message_body,
+               
+            )
+            message.save()
+            messages.success(request, "Teacher added successfully!")
+            return redirect('president_messages')  # Adjust redirect to your desired view
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+            return redirect('president_messages')
+
+    # Fetch all teacher records
+    messaging = President_Message.objects.all()
+
+
+    return render(request, 'president_messages.html', {
+  
+        'messaging': messaging,
+    })
+
+def edit_president_messages(request, president_id):
+    message = get_object_or_404(President_Message, id=president_id)  
+    
+    if request.method == 'POST':
+        message.message_date = request.POST.get('message_date')
+        message.message_subject = request.POST.get('message_subject')
+        message.message_body = request.POST.get('message_body')
+        
+        try:
+            message.save()
+            messages.success(request, "Message information updated successfully!")
+            return redirect('president_messages') 
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+
+
+    return render(request, 'edit_president_messages.html', {
+        'message': message,
+        
+    })
+
+def delete_president_message(request, president_id):
+    # Get the teacher object by its id (or pin_code, depending on your model setup)
+    teacher = get_object_or_404(President_Message, id=president_id)
+
+    if request.method == 'POST':
+        teacher.delete()  # Delete the teacher
+        messages.success(request, "Message deleted successfully!")
+        return redirect('president_messages')  # Redirect to the teachers list page
+
+    # If the method is GET, you can render a confirmation page or a simple confirmation message
+    return render(request, 'delete_president_messages.html', {'teacher': teacher})
+
+def president_message_details(request, teacher_id):
+    # Get the teacher object by its id
+    president = get_object_or_404(President_Message, id=teacher_id)
+    
+    return render(request, 'president_message_details.html', {'president': president})

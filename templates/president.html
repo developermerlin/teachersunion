@@ -42,7 +42,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="index-2.html">
+                <a href="{% url 'president' %}">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -102,38 +102,47 @@
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <li class="nav-label">Dashboard</li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="index-2.html">Home 1</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Layouts</span>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="layout-blank.html">Blank</a></li>
-                            <li><a href="layout-one-column.html">One Column</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="form-picker.html">Picker</a></li>
+                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Data Table</a></li>
+                            <li><a href="table-datatable.html">Administration</a></li>
+                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
                         </ul>
                     </li>
                 </ul>
