@@ -1,6 +1,5 @@
 {% load static %}
 
-{% if user.is_authenticated and user.is_superuser %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +16,8 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="{% static 'plugins1/chartist/css/chartist.min.css' %}">
     <link rel="stylesheet" href="{% static 'plugins1/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -102,26 +103,14 @@
         ***********************************-->
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu1">
-                    <li>
-                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'secretary' %}" style="font-size: 14px;">Dashboard</a></li>
-                        </ul>
-                    </li>
-                   
-                </ul>
-
-
                 <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
                     <li>
                         <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'teachers' %}" style="font-size: 14px;">Add Teachers</a></li>
+                            <li><a href="index-2.html" style="font-size: 14px;">Add Teachers</a></li>
                         </ul>
                     </li>
                    
@@ -159,64 +148,103 @@
         ***********************************-->
         <div class="content-body">
 
-            <div class="container-fluid mt-3">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-1">
+                    <div class="col-12">
+                        <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Teachers</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">{{teachers_counts}}</h2>
-                                    <p class="text-white mb-0">Available</p>
+                                <h3 style="text-align: center;">Teacher's Information</h3>
+                                <h2>{{ teacher.name }}</h2>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Date of Birth:</strong> {{ teacher.dob }}</p>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Gender:</strong> {{ teacher.get_gender_display }}</p>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>District:</strong> {{ teacher.district }}</p>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Province:</strong> {{ teacher.province }}</p>
+
+                                    </div>
                                 </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Pin Code:</strong> {{ teacher.pin_code }}</p>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Subjects Taught:</strong> {{ teacher.subjects_taught }}</p>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Schools Taught:</strong> {{ teacher.schools_taught }}</p>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Email:</strong> {{ teacher.email }}</p>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Phone Number:</strong> {{ teacher.phone_number }}</p>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Address:</strong> {{ teacher.address }}</p>
+
+                                    </div>
+
+
+                                    <div class="col-md-3">
+                                        <p style="font-size: 18px;"><strong>Years of Service: </strong> {{ teacher.time_of_service }} Years</p>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        {% if teacher.profile_picture %}
+                                        <img src="{{ teacher.profile_picture.url }}" alt="Profile Image" style="width: 200px; height: 200px; border-radius: 100px;">
+                                    {% else %}
+                                        <p>No Profile Image</p>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                              
+                                <div>
+                                    
+                            
+                                   
+                            
+                                    <a href="{% url 'teachers' %}" class="btn btn-secondary">Back to Teachers List</a>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
+
 
 
                   
+
+
+  
+
                 </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body pb-0 d-flex justify-content-between">
-                                        
-                                       
-                                    </div>
-                                    <div class="chart-wrapper">
-                                        <canvas id="chart_widget_2"></canvas>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            Secretary General 
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-
-                
-                
-                
-
-               
-
-               
-
-                
-
-              
             </div>
-            <!-- #/ container -->
+           
         </div>
         <!--**********************************
             Content body end
@@ -228,7 +256,7 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by Bigger 2024</p>
+                <p>Copyright &copy; Designed & Developed by Medpoma 2024</p>
             </div>
         </div>
         <!--**********************************
@@ -270,15 +298,24 @@
 
     <script src="{% static 'js1/dashboard/dashboard-1.js' %}"></script>
 
+    <script>
+        setTimeout(function() {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(function() {
+                    alert.remove();
+                }, 150); // Adjust this timing as needed
+            }
+        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+    </script>
+
 </body>
 
 
 </html>
-{% elif user.is_staff %}
-{% include 'finance.html' %}
-{% else %}
-{% include 'president.html' %}
-{% endif %}
+
 
 
 

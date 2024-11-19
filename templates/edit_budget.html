@@ -1,0 +1,406 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Teachers Union management system</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images1/favicon.png' %}">
+    <!-- Pignose Calender -->
+    <link href="{% static 'plugins1/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="{% static 'plugins1/chartist/css/chartist.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins1/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+   
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="index-2.html">
+                    <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
+                 
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+               
+                <div class="header-right">
+                    <ul class="clearfix">
+                        
+                        
+                        <li class="icons dropdown">
+                            <span class="username" style="margin-right: 10px;" >{{user}}</span>
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                
+                                <img src="{% static 'images/sltu-logo.jpg' %}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+ 
+                                        <hr class="my-2">
+                                        
+                                        <li><a href="{% url 'user_logout'%}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu1">
+                    <li>
+                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'secretary' %}" style="font-size: 14px;">Dashboard</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+
+
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="menu-icon"></i><span class="nav-text">Teachers</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'teachers' %}" style="font-size: 14px;">Add Teachers</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+        
+        <script>
+        function toggleDropdown(element) {
+            const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
+            const isExpanded = element.getAttribute('aria-expanded') === 'true';
+            
+            // Close all dropdowns
+            allDropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+                dropdown.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+        
+            // Toggle the clicked dropdown
+            if (!isExpanded) {
+                const dropdown = element.nextElementSibling;
+                dropdown.style.display = 'block';
+                element.setAttribute('aria-expanded', 'true');
+            }
+        }
+        </script>
+        
+        
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Edit Budget</h3>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6" style="margin-top: 20px;">
+                                                <small>Budget Description</small>
+                                               <input class="form-control shadow-none p-2" name="name" value="{{budget.name}}" type="text" placeholder="Budget Description" style="border: 1px solid black;">
+                                            </div>
+                                
+                    
+                                            <div class="col-md-6"style="margin-top: 20px;" >
+                                                <small>Budget Date</small>
+                                                <input class="form-control shadow-none p-2" name="budget_date" value="{{ budget.budget_date|date:'Y-m-d' }}" type="date" placeholder="Budget Date" style="border: 1px solid black;">
+                                            </div>
+                                           
+                                        </div>
+                    
+                    
+                                
+                                        <div class="row mt-3">
+                                           <div class="col-md-4">
+                                            <small>Executive Salary</small>
+                                                <input type="number" class="form-control shadow-none p-4" value="{{budget.executive_salary}}" name="executive_salary" style="border: 1px solid black;" placeholder="Executive Salary" required>
+                                            </div>
+                    
+                                            <div class="col-md-4">
+                                                <small>Administrative Salary</small>
+                                                <input type="number" class="form-control shadow-none p-4" value="{{budget.admin_salary}}" name="admin_salary" style="border: 1px solid black;" placeholder="Administrative Salary" required>
+                    
+                                            </div> 
+                    
+                                            <div class="col-md-4">
+                                                <small>Leave Allowance</small>
+                                                <input type="number" class="form-control shadow-none p-4" value="{{budget.leave_allowance}}" name="leave_allowance" style="border: 1px solid black;" placeholder="Leave Allowance" required>
+                    
+                                            </div> 
+                    
+                                        </div>
+                                
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <small>Acting Allowance</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.acting_allowance}}" name="acting_allowance" style="border: 1px solid black;" placeholder="Acting Allowance" required>
+                                             </div>
+                     
+                                             <div class="col-md-4">
+                                                <small>On the job training</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.on_the_job_training}}" name="on_the_job_training" style="border: 1px solid black;" placeholder="On the Job Training" required>
+                     
+                                             </div> 
+                     
+                                             <div class="col-md-4">
+                                                <small>NASSIT PAYE</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.paye_cost}}" name="paye_cost" style="border: 1px solid black;" placeholder="Nassit PAYE Cost" required>
+                     
+                                             </div> 
+                     
+                                         </div>
+                    
+                    
+                                         <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <small>Security Cost</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.security_cost}}" name="security_cost" style="border: 1px solid black;" placeholder="Security Cost" required>
+                                             </div>
+                     
+                                             <div class="col-md-4">
+                                                <small>Fuel Cost</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.fuel_cost}}" name="fuel_cost" style="border: 1px solid black;" placeholder="Fuel Cost" required>
+                     
+                                             </div> 
+                     
+                                             <div class="col-md-4">
+                                                <small>Audit Cost</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.audit_cost}}" name="audit_cost" style="border: 1px solid black;" placeholder="Audit Cost" required>
+                     
+                                             </div> 
+                     
+                                         </div>
+                    
+                                         <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <small>Internal Transport</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.internal_transport}}" name="internal_transport" style="border: 1px solid black;" placeholder="Internal Transport" required>
+                                             </div>
+                     
+                                             <div class="col-md-4">
+                                                <small>Light Bill</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.light_bill}}" name="light_bill" style="border: 1px solid black;" placeholder="Light Bill" required>
+                     
+                                             </div> 
+                     
+                                             <div class="col-md-4">
+                                                <small>Water Rate</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.water_rate}}" name="water_rate" style="border: 1px solid black;" placeholder="Water Rate" required>
+                     
+                                             </div> 
+                     
+                                         </div>
+                    
+                    
+                                         <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <small>Labor Affiliate</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.labor_affiliate}}" name="labor_affiliate" style="border: 1px solid black;" placeholder="Labor Affiliate" required>
+                                             </div>
+                     
+                                             <div class="col-md-4">
+                                                <small>Medical Allowance</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.medical_allowance}}" name="medical_allowance" style="border: 1px solid black;" placeholder="Medical Allowance" required>
+                     
+                                             </div> 
+                     
+                                             <div class="col-md-4">
+                                                <small>Financial Assistance</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.financial_assistance}}" name="financial_assistance" style="border: 1px solid black;" placeholder="Financial Assistance" required>
+                     
+                                             </div> 
+                     
+                                         </div>
+                    
+                    
+                                         <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <small>Education Assistance</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.education_assistance}}" name="education_assistance" style="border: 1px solid black;" placeholder="Education Assistance" required>
+                                             </div>
+                     
+                                             <div class="col-md-4">
+                                                <small>Berievement</small>
+                                                 <input type="number" class="form-control shadow-none p-4" value="{{budget.berievement}}" name="berievement" style="border: 1px solid black;" placeholder="Berievement" required>
+                     
+                                             </div> 
+                     
+                                             <div class="col-md-4">
+                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                                    <i class="fas fa-database"></i> Update Budget
+                                                </button>
+
+                                                <a href="{% url 'budget' %}" class="btn btn-danger p-3 w-100 text-white mt-3">
+                                                    <i class="fas fa-database"></i> Back go Budget
+                                                </a>
+                     
+                                             </div> 
+                     
+                                         </div>
+                                    </div>
+                                </form>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                  
+
+
+  
+
+                </div>
+            </div>
+           
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by Medpoma 2024</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins1/common/common.min.js' %}"></script>
+    <script src="{% static 'js1/custom.min.js' %}"></script>
+    <script src="{% static 'js1/settings.js' %}"></script>
+    <script src="{% static 'js1/gleek.js' %}"></script>
+    <script src="{% static 'js1/styleSwitcher.js' %}"></script>
+
+    <!-- Chartjs -->
+    <script src="{% static 'plugins1/chart.js/Chart.bundle.min.js' %}"></script>
+    <!-- Circle progress -->
+    <script src="{% static 'plugins1/circle-progress/circle-progress.min.js' %}"></script>
+    <!-- Datamap -->
+    <script src="{% static 'plugins1/d3v3/index.js' %}"></script>
+    <script src="{% static 'plugins1/topojson/topojson.min.js' %}"></script>
+    <script src="{% static 'plugins1/datamaps/datamaps.world.min.js' %}"></script>
+    <!-- Morrisjs -->
+    <script src="{% static 'plugins1/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'plugins1/morris/morris.min.js' %}"></script>
+    <!-- Pignose Calender -->
+    <script src="{% static 'plugins1/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins1/pg-calendar/js/pignose.calendar.min.js' %}"></script>
+    <!-- ChartistJS -->
+    <script src="{% static 'plugins1/chartist/js/chartist.min.j' %}s"></script>
+    <script src="{% static 'plugins1/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
+
+
+
+    <script src="{% static 'js1/dashboard/dashboard-1.js' %}"></script>
+
+    <script>
+        setTimeout(function() {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(function() {
+                    alert.remove();
+                }, 150); // Adjust this timing as needed
+            }
+        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+    </script>
+
+</body>
+
+
+</html>
+
+
+
+

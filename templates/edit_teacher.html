@@ -1,0 +1,381 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Teachers Union management system</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images1/favicon.png' %}">
+    <!-- Pignose Calender -->
+    <link href="{% static 'plugins1/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="{% static 'plugins1/chartist/css/chartist.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins1/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+   
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="index-2.html">
+                    <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
+                 
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+               
+                <div class="header-right">
+                    <ul class="clearfix">
+                        
+                        
+                        <li class="icons dropdown">
+                            <span class="username" style="margin-right: 10px;" >{{user}}</span>
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                
+                                <img src="{% static 'images/sltu-logo.jpg' %}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+ 
+                                        <hr class="my-2">
+                                        
+                                        <li><a href="{% url 'user_logout'%}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" style="font-size: 20px;" href="javascript:void(0);" onclick="toggleDropdown(this)" aria-expanded="false">
+                            <i class="menu-icon"></i><span class="nav-text">Teachers</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="index-2.html" style="font-size: 14px;">Add Teachers</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+        
+        <script>
+        function toggleDropdown(element) {
+            const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
+            const isExpanded = element.getAttribute('aria-expanded') === 'true';
+            
+            // Close all dropdowns
+            allDropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+                dropdown.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+        
+            // Toggle the clicked dropdown
+            if (!isExpanded) {
+                const dropdown = element.nextElementSibling;
+                dropdown.style.display = 'block';
+                element.setAttribute('aria-expanded', 'true');
+            }
+        }
+        </script>
+        
+        
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Edit Teacher</h3>
+                              
+                                <form method="POST" enctype="multipart/form-data">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="name">Name:</label>
+                                                    <input type="text" id="name" name="name" value="{{ teacher.name }}" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="dob">Date of Birth:</label>
+                                                    <input type="date" id="dob" name="dob" value="{{ teacher.dob|date:'Y-m-d' }}" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="gender">Gender:</label>
+                                                    <select id="gender" name="gender" class="form-control" required>
+                                                        {% for code, label in gender_choices %}
+                                                            <option value="{{ code }}" {% if teacher.gender == code %}selected{% endif %}>
+                                                                {{ label }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="district">District:</label>
+                                                    <select id="district" name="district" class="form-control" required>
+                                                        {% for code, label in district_choices %}
+                                                            <option value="{{ code }}" {% if teacher.district == code %}selected{% endif %}>
+                                                                {{ label }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="province">Province:</label>
+                                                    <select id="province" name="province" class="form-control" required>
+                                                        {% for code, label in province_choices %}
+                                                            <option value="{{ code }}" {% if teacher.province == code %}selected{% endif %}>
+                                                                {{ label }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="pin_code">Pin Code:</label>
+                                                    <input type="text" id="pin_code" name="pin_code" class="form-control" value="{{ teacher.pin_code }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="subjects_taught">Subjects Taught:</label>
+                                                    <textarea id="subjects_taught" name="subjects_taught" class="form-control" required>{{ teacher.subjects_taught }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="schools_taught">Schools Taught:</label>
+                                                    <textarea id="schools_taught" name="schools_taught" class="form-control" required>{{ teacher.schools_taught }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="email">Email:</label>
+                                                    <input type="email" id="email" name="email" class="form-control" value="{{ teacher.email }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="phone_number">Phone Number:</label>
+                                                    <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ teacher.phone_number }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="address">Address:</label>
+                                                    <textarea id="address" name="address" class="form-control">{{ teacher.address }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div>
+                                                    <label for="profile_picture">Profile Picture:</label>
+                                                    {% if teacher.profile_picture %}
+                                                        <img src="{{ teacher.profile_picture.url }}" alt="Current Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    {% endif %}
+                                                    <input type="file" id="profile_picture" class="form-control" name="profile_picture">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+
+                                            <div class="col-md-3">
+                                                <input type="number" name="time_of_service" class="form-control" value="{{teacher.time_of_service}}" placeholder="Time of Service (in years)" style="border: 1px solid black;">
+
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <button class="btn btn-success w-100 text-white p-3" type="submit">Update</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                    
+                                    
+                                   
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                  
+
+
+  
+
+                </div>
+            </div>
+           
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by Medpoma 2024</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins1/common/common.min.js' %}"></script>
+    <script src="{% static 'js1/custom.min.js' %}"></script>
+    <script src="{% static 'js1/settings.js' %}"></script>
+    <script src="{% static 'js1/gleek.js' %}"></script>
+    <script src="{% static 'js1/styleSwitcher.js' %}"></script>
+
+    <!-- Chartjs -->
+    <script src="{% static 'plugins1/chart.js/Chart.bundle.min.js' %}"></script>
+    <!-- Circle progress -->
+    <script src="{% static 'plugins1/circle-progress/circle-progress.min.js' %}"></script>
+    <!-- Datamap -->
+    <script src="{% static 'plugins1/d3v3/index.js' %}"></script>
+    <script src="{% static 'plugins1/topojson/topojson.min.js' %}"></script>
+    <script src="{% static 'plugins1/datamaps/datamaps.world.min.js' %}"></script>
+    <!-- Morrisjs -->
+    <script src="{% static 'plugins1/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'plugins1/morris/morris.min.js' %}"></script>
+    <!-- Pignose Calender -->
+    <script src="{% static 'plugins1/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins1/pg-calendar/js/pignose.calendar.min.js' %}"></script>
+    <!-- ChartistJS -->
+    <script src="{% static 'plugins1/chartist/js/chartist.min.j' %}s"></script>
+    <script src="{% static 'plugins1/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
+
+
+
+    <script src="{% static 'js1/dashboard/dashboard-1.js' %}"></script>
+
+    <script>
+        setTimeout(function() {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(function() {
+                    alert.remove();
+                }, 150); // Adjust this timing as needed
+            }
+        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+    </script>
+
+</body>
+
+
+</html>
+
+
+
+
