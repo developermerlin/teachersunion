@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +15,8 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="{% static 'plugins1/chartist/css/chartist.min.css' %}">
     <link rel="stylesheet" href="{% static 'plugins1/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -42,7 +45,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="index-2.html">
+                <a href="{% url 'president' %}">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -105,7 +108,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -113,7 +116,7 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
@@ -121,7 +124,7 @@
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'budget' %}">All budget</a></li>
+                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
@@ -137,11 +140,10 @@
 
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Messages</span>
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
-
+                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -178,101 +180,139 @@
         ***********************************-->
         <div class="content-body">
 
-            <div class="container-fluid mt-3">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-1">
+                    <div class="col-12">
+                        <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Teachers</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">{{teachers_counts}}</h2>
-                                    <p class="text-white mb-0">Available</p>
-                                </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-2">
-                            <div class="card-body">
-                                <h3 class="card-title text-white">Budget</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">{{budget_counts}}</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
-                                </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-3">
-                            <div class="card-body">
-                                <h3 class="card-title text-white">New Customers</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">4565</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
-                                </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-4">
-                            <div class="card-body">
-                                <h3 class="card-title text-white">Customer Satisfaction</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">99%</h2>
-                                    <p class="text-white mb-0">Jan - March 2019</p>
-                                </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body pb-0 d-flex justify-content-between">
+                                <h3>Messages From President</h3>
+                               
+                                {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show w-50" role="alert" 
+                                        style="position: relative; margin-left: 250px;">
+                                        <strong style="margin-left: 140px;">{{ message }}</strong> 
                                         
-                                       
                                     </div>
-                                    <div class="chart-wrapper">
-                                        <canvas id="chart_widget_2"></canvas>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            Finance Officer
-                                           
-                                        </div>
-                                    </div>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                                <div class="table-responsive" style="margin-top: 50px;">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-size: 16px; color:black; text-align: center;">No</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Message Date</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Message Subject</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Action</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for teach in messaging %}
+                                            
+                                            <tr>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
+                                               
+                                                
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.message_date}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{teach.message_subject}}</td>
+                                                
+                                              
+                                                <td style="text-align: center;">
+                                                
+
+                                                      <a href="{% url 'view_president_message_details' teach.id %}" >View
+                                                        <i class="fas fa-eye" style="color: rgb(12, 12, 125); margin-left: 5px;"></i>
+                                                      </a>
+                                                </td>
+                                              
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                          
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
+                  
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Message</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <small>Message Date</small>
+                            <input class="form-control shadow-none p-2" name="message_date" type="date" placeholder="Date of Message" style="border: 1px solid black;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-4 offset-md-3">
+                            <!-- File input for product image -->
+                            <input class="form-control shadow-none p-2" name="message_subject" type="text" placeholder="Full Name" style="border: 1px solid black;">
+                        </div>
+                    </div>
+            
+            
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-3">
+                           <textarea name="message_body" id="" cols="40" rows="6" class="form-control" style="border: 1px solid black;" placeholder="Message..."></textarea>
+                        </div>
+            
+                    </div>
+
+
+                   
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-3">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                <i class="fas fa-database"></i> Send Message
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                
-
-                
-                
-                
-
-               
-
-               
-
-                
-
+            </form>
+                  
               
+
+            
+            
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+                </div>
             </div>
-            <!-- #/ container -->
+           
         </div>
         <!--**********************************
             Content body end
@@ -284,7 +324,7 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by Bigger 2024</p>
+                <p>Copyright &copy; Designed & Developed by Medpoma 2024</p>
             </div>
         </div>
         <!--**********************************
@@ -321,12 +361,32 @@
     <!-- ChartistJS -->
     <script src="{% static 'plugins1/chartist/js/chartist.min.j' %}s"></script>
     <script src="{% static 'plugins1/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/datatable/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins1/tables/js/datatable-init/datatable-basic.min.js' %}"></script>
 
 
 
     <script src="{% static 'js1/dashboard/dashboard-1.js' %}"></script>
 
+    <script>
+        setTimeout(function() {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(function() {
+                    alert.remove();
+                }, 150); // Adjust this timing as needed
+            }
+        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+    </script>
+
 </body>
 
 
 </html>
+
+
+
+

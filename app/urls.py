@@ -29,6 +29,16 @@ urlpatterns = [
     path('delete_president_message/delete/<int:president_id>/', views.delete_president_message, name='delete_president_message'),
     path('president_message_details/<int:teacher_id>/', views.president_message_details, name='president_message_details'),
 
+    path('finance_messages/', views.finance_messages, name='finance_messages'),
+    path('view_president_message_details/<int:teacher_id>/', views.view_president_message_details, name='view_president_message_details'),
+
+    path('message_to_president/', views.message_to_president, name='message_to_president'),
+    path('edit_message_to_president/<int:president_id>/', views.edit_message_to_president, name='edit_message_to_president'),
+    path('delete_message_to_president/delete/<int:president_id>/', views.delete_message_to_president, name='delete_message_to_president'),
+
+
+
+
 
 
 
