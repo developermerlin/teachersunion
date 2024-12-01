@@ -131,9 +131,10 @@
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
+                        
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Administration</a></li>
-                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+                            <li><a href="{% url 'admin_expenditure' %}">Administration</a></li>
+                            <li><a href="">Teachers Welfare</a></li>
 
                         </ul>
                     </li>
@@ -150,6 +151,7 @@
                 </ul>
             </div>
         </div>
+        
         <script>
         function toggleDropdown(element) {
             const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
@@ -185,58 +187,81 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Edit Message</h3>
-                                <form method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="container">
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 offset-md-3">
-                                                <small>Message Date</small>
-                                                <input class="form-control shadow-none p-2" name="message_date" type="date" value="{{message.message_date|date:'Y-m-d'}}" placeholder="Date of Message" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 mt-4 offset-md-3">
-                                                <!-- File input for product image -->
-                                                <input class="form-control shadow-none p-2" name="message_subject" value="{{message.message_subject}}" type="text" placeholder="Full Name" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
                                 
-                                
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <textarea 
-                                                    name="message_body" 
-                                                    id="" 
-                                                    cols="40" 
-                                                    rows="6" 
-                                                    class="form-control" 
-                                                    style="border: 1px solid black;" 
-                                                    placeholder="Message..."
-                                                >{{ message.message_body }}</textarea>
+                                <div class="modal-body">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h2>Update Statutory Deduction</h2>
+                                                </div>
                                             </div>
-                                        </div>
-                                        
-                    
-                    
-                                       
-                    
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <!-- Submit button -->
-                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
-                                                    <i class="fas fa-database"></i> Update Message
-                                                </button>
+                                            <div class="row">
+                                                <div class="col-md-6" style="margin-top: 20px;">
+                                                   <input class="form-control shadow-none p-2" name="name" value="{{allowance.name}}" type="text" placeholder="Name of Staff" style="border: 1px solid black;">
+                                                </div>
+                                    
+                        
+                                                <div class="col-md-6">
+                                                    <small>Payment Date</small>
+                                                    <input type="date" name="payment_date" class="form-control" value="{{ allowance.payment_date|date:'Y-m-d' }}" style="border: 1px solid black;" required>
 
-                                                <a href="{% url 'message_to_president' %}" type="submit" class="btn btn-danger mt-3 p-3 w-100 text-white">
-                                                     BACK
-                                                </a>
+                                                </div>
+                                               
                                             </div>
+
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-4">
+                                                    <select name="deduction_type" class="form-control" style="border: 1px solid black;">
+                                                        <option value="">Deduction Type</option>
+                                                        <option value="PAYE to NASSIT" {% if allowance.deduction_type == "PAYE to NASSIT" %}selected{% endif %}>PAYE to NASSIT</option>
+                                                        <option value="Security Firm" {% if allowance.deduction_type == "Security Firm" %}selected{% endif %}>Security Firm</option>
+                                                        <option value="Audit Firm" {% if allowance.deduction_type == "Audit Firm" %}selected{% endif %}>Audit Firm</option>
+                                                        <option value="Affiliate Fee" {% if allowance.deduction_type == "Affiliate Fee" %}selected{% endif %}>Affiliate Fee</option>
+                                                    </select>
+                                                    
+
+                                                </div>
+                        
+                                               
+                                                <div class="col-md-4">
+                                                    <select name="staff_position" class="form-control" style="border: 1px solid black;">
+                                                        <option value="">Staff Position</option>
+                                                        <option value="Finance Officer" {% if allowance.staff_position == "Finance Officer" %}selected{% endif %}>Finance Officer</option>
+                                                        <option value="President" {% if allowance.staff_position == "President" %}selected{% endif %}>President</option>
+                                                        <option value="Secretary General" {% if allowance.staff_position == "Secretary General" %}selected{% endif %}>Secretary General</option>
+                                                        <option value="Security" {% if allowance.staff_position == "Security" %}selected{% endif %}>Security</option>
+                                                        <option value="Security" {% if allowance.staff_position == "Security" %}selected{% endif %}>Teachers Union</option>
+                                                    </select>
+                                                </div>
+                        
+                                                        <div class="col-md-4">
+                                                            <input type="number" class="form-control shadow-none p-4" name="payment_cost" value="{{allowance.payment_cost}}" style="border: 1px solid black;" placeholder="Allowance/Salary Cost" required>
+                                
+                                                        </div> 
+                                                </div> 
+                        
+                                            </div>
+                                
+                        
+                                             <div class="row mt-3">
+                                                
+                         
+                                                 <div class="col-md-6 offset-md-3">
+                                                    <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                                        <i class="fas fa-database"></i> Update Statutory Deduction
+                                                    </button>
+                         
+                                                 </div> 
+                         
+                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                               
+                           
+                               
                             </div>
                         </div>
                     </div>
@@ -248,6 +273,7 @@
 
   
 
+  </div>
                 </div>
             </div>
            
@@ -315,9 +341,9 @@
                 alert.classList.add('fade');
                 setTimeout(function() {
                     alert.remove();
-                }, 150); // Adjust this timing as needed
+                }, 150); 
             }
-        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+        }, 2000); 
     </script>
 
 </body>

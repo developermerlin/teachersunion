@@ -45,7 +45,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="{% url 'finance' %}">
+                <a href="index-2.html">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -108,7 +108,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -116,7 +116,7 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
@@ -124,7 +124,7 @@
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'budget' %}">All budget</a></li>
+                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
@@ -132,7 +132,7 @@
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Administration</a></li>
+                            <li><a href="{% url 'president_expenditure' %}">Administration</a></li>
                             <li><a href="table-datatable.html">Teachers Welfare</a></li>
 
                         </ul>
@@ -140,16 +140,17 @@
 
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Messages</span>
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
-
+                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
+                            <li><a href="{% url 'message_from_finance' %}">Finance Messages</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
+        
         <script>
         function toggleDropdown(element) {
             const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
@@ -185,58 +186,45 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Edit Message</h3>
-                                <form method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="container">
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 offset-md-3">
-                                                <small>Message Date</small>
-                                                <input class="form-control shadow-none p-2" name="message_date" type="date" value="{{message.message_date|date:'Y-m-d'}}" placeholder="Date of Message" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 mt-4 offset-md-3">
-                                                <!-- File input for product image -->
-                                                <input class="form-control shadow-none p-2" name="message_subject" value="{{message.message_subject}}" type="text" placeholder="Full Name" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                                
-                                
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <textarea 
-                                                    name="message_body" 
-                                                    id="" 
-                                                    cols="40" 
-                                                    rows="6" 
-                                                    class="form-control" 
-                                                    style="border: 1px solid black;" 
-                                                    placeholder="Message..."
-                                                >{{ message.message_body }}</textarea>
-                                            </div>
-                                        </div>
-                                        
-                    
-                    
-                                       
-                    
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <!-- Submit button -->
-                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
-                                                    <i class="fas fa-database"></i> Update Message
-                                                </button>
+                                <!-- templates/salary_allowance_list.html -->
+<table class="table table-striped">
+    <h2 class="text-center mb-5">Salaries and Allowance Reports</h2>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Staff Name</th>
+            <th>Payment Date</th>
+            <th>Expenditure Type</th>
+            <th>Staff Position</th>
+            <th>Payment Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sal in salary_allowance %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ sal.name }}</td>
+            <td>{{ sal.payment_date }}</td>
+            <td>{{ sal.expenditure_type }}</td>
+            <td>{{ sal.staff_position }}</td>
+            <td>Nle{{ sal.payment_cost }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No data available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
-                                                <a href="{% url 'message_to_president' %}" type="submit" class="btn btn-danger mt-3 p-3 w-100 text-white">
-                                                     BACK
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+    <a href="{% url 'all_salary_allowance' %}" class="btn btn-outline-secondary">
+        <i class="fa fa-print" aria-hidden="true"></i>
+        <span class="ms-1">Print Report</span> 
+    </a>
+</table>
+
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -244,7 +232,8 @@
 
 
                   
-
+                 
+                    
 
   
 

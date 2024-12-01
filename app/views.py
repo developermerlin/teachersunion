@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from datetime import datetime
-from .models import Teacher, Budget, President_Message,Finance_Message
+from .models import Teacher, Budget, President_Message,Finance_Message,Salary_Allowance,Statutory_Deduction,Running_Cost
 # Create your views here.
 
 def home1(request):
@@ -10,7 +10,8 @@ def home1(request):
 def secretary(request):
     teachers_counts = Teacher.objects.all().count()
     budget_counts = Teacher.objects.all().count()
-    return render(request, 'secretary.html',{'teachers_counts':teachers_counts,'budget_counts':budget_counts})
+    message = President_Message.objects.all().count()
+    return render(request, 'secretary.html',{'teachers_counts':teachers_counts,'budget_counts':budget_counts,'message':message})
 
 def finance(request):
     teachers = Teacher.objects.all().count()
@@ -26,9 +27,11 @@ def finance(request):
 def president(request):
     teachers = Teacher.objects.all().count()
     budget = Budget.objects.all().count()
+    message = Finance_Message.objects.all().count()
     context = {
         'teachers':teachers,
         'budget':budget,
+        'message':message,
     }
     return render(request, 'president.html',context)
 
@@ -606,3 +609,302 @@ def delete_message_to_president(request, president_id):
 
     # If the method is GET, you can render a confirmation page or a simple confirmation message
     return render(request, 'delete_message_to_president.html', {'teacher': teacher})
+
+
+def message_from_finance(request):
+    if request.method == 'POST':
+        message_date = request.POST.get('message_date')
+        message_subject = request.POST.get('message_subject')
+        message_body = request.POST.get('message_body')
+        try:
+            message = Finance_Message(
+                message_subject=message_subject,
+                message_date=datetime.strptime(message_date, '%Y-%m-%d').date(),
+                message_body=message_body,
+               
+            )
+            message.save()
+            messages.success(request, "Message sent successfully!")
+            return redirect('message_from_finance')  # Adjust redirect to your desired view
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+            return redirect('message_from_finance')
+
+    # Fetch all teacher records
+    messaging = Finance_Message.objects.all()
+
+
+    return render(request, 'message_from_finance.html', {
+  
+        'messaging': messaging,
+    })
+
+
+
+def view_message_from_finance(request, teacher_id):
+    # Get the teacher object by its id
+    president = get_object_or_404(Finance_Message, id=teacher_id)
+    
+    return render(request, 'view_message_from_finance.html', {'president': president})
+
+
+def admin_expenditure(request):
+    return render(request, 'admin_expenditure.html')
+
+def salary_allowance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        expenditure_type = request.POST.get('expenditure_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Salary_Allowance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                expenditure_type=expenditure_type,
+                staff_position=staff_position,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Salary Allowance created successfully!")
+            return redirect('salary_allowance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    salary_allowance = Salary_Allowance.objects.all()
+    return render(request, 'salary_allowance.html',{'salary_allowance':salary_allowance})
+
+
+def update_salary_allowance(request, pk):
+    allowance = get_object_or_404(Salary_Allowance, pk=pk)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        expenditure_type = request.POST.get('expenditure_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.expenditure_type = expenditure_type
+            allowance.staff_position = staff_position
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Salary Allowance updated successfully!")
+            return redirect('salary_allowance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_salary_allowance.html', {'allowance': allowance})
+
+
+
+def delete_salary_allowance(request, pk):
+    allowance = get_object_or_404(Salary_Allowance, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Salary Allowance deleted successfully!")
+            return redirect('salary_allowance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_salary_allowance.html', {'allowance': allowance})
+
+def statutory_deduction(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        deduction_type = request.POST.get('deduction_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+        try:
+            Statutory_Deduction.objects.create(
+                name=name,
+                payment_date=payment_date,
+                deduction_type=deduction_type,
+                staff_position=staff_position,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Salary Allowance created successfully!")
+            return redirect('statutory_deduction')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    statutory_deduction = Statutory_Deduction.objects.all()
+    return render(request, 'statutory_deduction.html',{'statutory_deduction':statutory_deduction})
+
+
+def update_statutory_deduction(request, pk):
+    allowance = get_object_or_404(Statutory_Deduction, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        deduction_type = request.POST.get('deduction_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.deduction_type = deduction_type
+            allowance.staff_position = staff_position
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Statutory Deduction updated successfully!")
+            return redirect('statutory_deduction')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_statutory_deduction.html', {'allowance': allowance})
+
+
+def delete_statutory_deduction(request, pk):
+    allowance = get_object_or_404(Statutory_Deduction, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Statutory Deduction deleted successfully!")
+            return redirect('statutory_deduction')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_statutory_deduction.html', {'allowance': allowance})
+
+
+def running_cost(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        deduction_type = request.POST.get('deduction_type')
+        payment_cost = request.POST.get('payment_cost')
+        try:
+            Running_Cost.objects.create(
+                name=name,
+                payment_date=payment_date,
+                deduction_type=deduction_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Running Cost created successfully!")
+            return redirect('running_cost')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    running_cost = Running_Cost.objects.all()
+    return render(request, 'running_cost.html',{'running_cost':running_cost})
+
+
+def update_running_cost(request, pk):
+    allowance = get_object_or_404(Running_Cost, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        deduction_type = request.POST.get('deduction_type')
+        payment_cost = request.POST.get('payment_cost')
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.deduction_type = deduction_type
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Statutory Deduction updated successfully!")
+            return redirect('running_cost')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_running_cost.html', {'allowance': allowance})
+
+
+def delete_running_cost(request, pk):
+    allowance = get_object_or_404(Running_Cost, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Running Cost deleted successfully!")
+            return redirect('running_cost')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_running_cost.html', {'allowance': allowance})
+
+
+def president_expenditure(request):
+    return render(request, 'president_expenditure.html')
+
+
+def president_salary_allowance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        expenditure_type = request.POST.get('expenditure_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Salary_Allowance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                expenditure_type=expenditure_type,
+                staff_position=staff_position,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Salary Allowance created successfully!")
+            return redirect('president_salary_allowance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_salary_allowance = Salary_Allowance.objects.all()
+    return render(request, 'president_salary_allowance.html',{'president_salary_allowance':president_salary_allowance})
+
+
+
+def all_salary_allowance(request):
+    salary_allowance = Salary_Allowance.objects.all()
+    return render(request, 'all_salary_allowance.html',{'salary_allowance':salary_allowance})
+
+
+def president_statutory_deduction(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        expenditure_type = request.POST.get('expenditure_type')
+        staff_position = request.POST.get('staff_position')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Statutory_Deduction.objects.create(
+                name=name,
+                payment_date=payment_date,
+                expenditure_type=expenditure_type,
+                staff_position=staff_position,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Statutory Deduction created successfully!")
+            return redirect('president_statutory_deduction')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_statutory_deduction = Statutory_Deduction.objects.all()
+    return render(request, 'president_statutory_deduction.html',{'president_statutory_deduction':president_statutory_deduction})
+
+
+def all_statutory_deduction(request):
+    salary_allowance = Statutory_Deduction.objects.all()
+    return render(request, 'all_statutory_deduction.html',{'salary_allowance':salary_allowance})
+
+
+def president_running_cost(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        deduction_type = request.POST.get('deduction_type')
+        payment_cost = request.POST.get('payment_cost')
+        try:
+            Running_Cost.objects.create(
+                name=name,
+                payment_date=payment_date,
+                deduction_type=deduction_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Running Cost created successfully!")
+            return redirect('running_cost')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_running_cost = Running_Cost.objects.all()
+    return render(request, 'president_running_cost.html',{'president_running_cost':president_running_cost})
+
+
+def all_running_cost(request):
+    salary_allowance = Running_Cost.objects.all()
+    return render(request, 'all_running_cost.html',{'salary_allowance':salary_allowance})

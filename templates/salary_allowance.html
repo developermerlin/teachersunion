@@ -131,9 +131,10 @@
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
+                        
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Administration</a></li>
-                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+                            <li><a href="{% url 'admin_expenditure' %}">Administration</a></li>
+                            <li><a href="">Teachers Welfare</a></li>
 
                         </ul>
                     </li>
@@ -150,6 +151,7 @@
                 </ul>
             </div>
         </div>
+        
         <script>
         function toggleDropdown(element) {
             const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
@@ -185,58 +187,75 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Edit Message</h3>
-                                <form method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="container">
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 offset-md-3">
-                                                <small>Message Date</small>
-                                                <input class="form-control shadow-none p-2" name="message_date" type="date" value="{{message.message_date|date:'Y-m-d'}}" placeholder="Date of Message" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 mt-4 offset-md-3">
-                                                <!-- File input for product image -->
-                                                <input class="form-control shadow-none p-2" name="message_subject" value="{{message.message_subject}}" type="text" placeholder="Full Name" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                                
-                                
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <textarea 
-                                                    name="message_body" 
-                                                    id="" 
-                                                    cols="40" 
-                                                    rows="6" 
-                                                    class="form-control" 
-                                                    style="border: 1px solid black;" 
-                                                    placeholder="Message..."
-                                                >{{ message.message_body }}</textarea>
-                                            </div>
-                                        </div>
-                                        
-                    
-                    
-                                       
-                    
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <!-- Submit button -->
-                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
-                                                    <i class="fas fa-database"></i> Update Message
-                                                </button>
-
-                                                <a href="{% url 'message_to_president' %}" type="submit" class="btn btn-danger mt-3 p-3 w-100 text-white">
-                                                     BACK
-                                                </a>
-                                            </div>
+                                <h3>Salary and Allowance</h3>
+                                <div class="container">
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-12" style="margin-left: 850px;">
+                                            <a href="" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                                <span class="ms-1">Create Salary & Allowance</span> 
+                                            </a>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                                {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show w-50" role="alert" 
+                                        style="position: relative; margin-left: 250px;">
+                                        <strong style="margin-left: 140px;">{{ message }}</strong> 
+                                        
+                                    </div>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                                <div class="table-responsive" style="margin-top: 50px;">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-size: 16px; color:black; text-align: center;">No</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Name</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Date</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Expenditure Type</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Position</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Cost</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Action</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for sal in salary_allowance %}
+                                            
+                                            <tr>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
+                                                
+                                                <td style="font-size: 16px; color:black;">{{sal.name}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.payment_date}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.expenditure_type}}</td>
+                                                <td style="font-size: 16px; color:black;">{{sal.staff_position}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">Le{{sal.payment_cost}}</td>
+                                                
+                                              
+                                                <td style="text-align: center;">
+                                                    <a href="{% url 'update_salary_allowance' sal.id%}" >
+                                                        <i class="fas fa-pen" style="color: rgb(5, 94, 43); margin-right: 5px;"></i>
+                                                      </a>
+
+                                                      <a href="{%url 'delete_salary_allowance' sal.id%}" >
+                                                        <i class="fas fa-trash" style="color: rgb(182, 10, 10);"></i>
+                                                      </a>
+
+                                                </td>
+                                              
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                        
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +266,96 @@
 
 
   
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Salary & Allowance</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6" style="margin-top: 20px;">
+                           <input class="form-control shadow-none p-2" name="name" type="text" placeholder="Name of Staff" style="border: 1px solid black;">
+                        </div>
+            
 
+                        <div class="col-md-6">
+                            <small>Payment Date</small>
+                            <input class="form-control shadow-none p-2" name="payment_date" type="date" placeholder="Payment Date" style="border: 1px solid black;">
+                        </div>
+                       
+                    </div>
+
+
+            
+                    <div class="row mt-3">
+                       <div class="col-md-4">
+                        <select name="expenditure_type"  class="form-control" style="border: 1px solid black;">
+                            <option value="">Expenditure Type</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Leave Allowance">Leave Allowance</option>
+                            <option value="Acting Allowance">Acting Allowance</option>
+                            <option value="On the Job Training">On the Job Training</option>
+                          </select>                        
+                        </div>
+
+                       
+                            <div class="col-md-4">
+                                <select name="staff_position" class="form-control" style="border: 1px solid black;">
+                                    <option value="">Staff Position</option>
+                                    <option value="Finance Officer">Finance Officer</option>
+                                    <option value="President">President</option>
+                                    <option value="Secretary General">Secretary General</option>
+                                    <option value="Security">Security</option>
+                                  </select>                        
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control shadow-none p-4" name="payment_cost" style="border: 1px solid black;" placeholder="Allowance/Salary Cost" required>
+        
+                                </div> 
+                        </div> 
+
+                    </div>
+            
+               
+
+                     
+
+
+                     <div class="row mt-3">
+                        
+ 
+                         <div class="col-md-6 offset-md-3">
+                            <button type="submit" class="btn btn-success p-3 w-100 text-white">
+                                <i class="fas fa-database"></i> Add Budget
+                            </button>
+ 
+                         </div> 
+ 
+                     </div>
+                </div>
+            </form>
+                  
+              
+
+            
+            
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
                 </div>
             </div>
            
@@ -315,9 +423,9 @@
                 alert.classList.add('fade');
                 setTimeout(function() {
                     alert.remove();
-                }, 150); // Adjust this timing as needed
+                }, 150); 
             }
-        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+        }, 2000); 
     </script>
 
 </body>

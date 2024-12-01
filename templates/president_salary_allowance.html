@@ -108,7 +108,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
+                            <li><a href="{% url 'president' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -116,7 +116,7 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
@@ -124,7 +124,7 @@
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'budget' %}">All budget</a></li>
+                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
@@ -132,7 +132,7 @@
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="table-datatable.html">Administration</a></li>
+                            <li><a href="{% url 'president_expenditure' %}">Administration</a></li>
                             <li><a href="table-datatable.html">Teachers Welfare</a></li>
 
                         </ul>
@@ -140,16 +140,17 @@
 
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Messages</span>
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
-
+                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
+                            <li><a href="{% url 'message_from_finance' %}">Finance Messages</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
+        
         <script>
         function toggleDropdown(element) {
             const allDropdowns = document.querySelectorAll('.metismenu > li > ul');
@@ -185,58 +186,76 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Edit Message</h3>
-                                <form method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="container">
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 offset-md-3">
-                                                <small>Message Date</small>
-                                                <input class="form-control shadow-none p-2" name="message_date" type="date" value="{{message.message_date|date:'Y-m-d'}}" placeholder="Date of Message" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                    
-                                        <div class="row">
-                                            <div class="col-md-6 mt-4 offset-md-3">
-                                                <!-- File input for product image -->
-                                                <input class="form-control shadow-none p-2" name="message_subject" value="{{message.message_subject}}" type="text" placeholder="Full Name" style="border: 1px solid black;">
-                                            </div>
-                                        </div>
-                                
-                                
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <textarea 
-                                                    name="message_body" 
-                                                    id="" 
-                                                    cols="40" 
-                                                    rows="6" 
-                                                    class="form-control" 
-                                                    style="border: 1px solid black;" 
-                                                    placeholder="Message..."
-                                                >{{ message.message_body }}</textarea>
-                                            </div>
-                                        </div>
-                                        
-                    
-                    
-                                       
-                    
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 offset-md-3">
-                                                <!-- Submit button -->
-                                                <button type="submit" class="btn btn-success p-3 w-100 text-white">
-                                                    <i class="fas fa-database"></i> Update Message
-                                                </button>
+                                <h3>Salary and Allowance</h3>
+                                <div class="container">
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-12" style="margin-left: 850px;">
+                                            <a href="{% url 'all_salary_allowance' %}" class="btn btn-outline-secondary">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                                <span class="ms-1">view Report</span> 
+                                            </a>
 
-                                                <a href="{% url 'message_to_president' %}" type="submit" class="btn btn-danger mt-3 p-3 w-100 text-white">
-                                                     BACK
-                                                </a>
-                                            </div>
+
                                         </div>
+                                      
                                     </div>
-                                </form>
+                                </div>
+                                {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show w-50" role="alert" 
+                                        style="position: relative; margin-left: 250px;">
+                                        <strong style="margin-left: 140px;">{{ message }}</strong> 
+                                        
+                                    </div>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                                <div class="table-responsive" style="margin-top: 50px;">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-size: 16px; color:black; text-align: center;">No</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Name</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Date</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Expenditure Type</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Position</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Cost</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">Action</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for sal in president_salary_allowance %}
+                                            
+                                            <tr>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
+                                                
+                                                <td style="font-size: 16px; color:black;">{{sal.name}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.payment_date}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.expenditure_type}}</td>
+                                                <td style="font-size: 16px; color:black;">{{sal.staff_position}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">Le{{sal.payment_cost}}</td>
+                                                
+                                              
+                                                <td style="text-align: center;">
+                                                    <a href="" >
+                                                        <i class="fas fa-eye" style="color: rgb(5, 94, 43); margin-right: 5px;"></i>
+                                                      </a>
+
+                                                      
+
+                                                </td>
+                                              
+                                            </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                        
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +266,8 @@
 
 
   
-
+                 
+  </div>
                 </div>
             </div>
            
@@ -269,13 +289,40 @@
             Footer end
         ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+  
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
+    <script>
+        document.getElementById('display-salary-btn').addEventListener('click', function () {
+            fetch('/display-salaries/', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // Identify this as an AJAX request
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Insert the returned HTML into the div
+                document.getElementById('salary-content').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error fetching salaries:', error);
+                alert('Failed to load data. Please try again.');
+            });
+        });
+    </script>
+    
+    
+
+
+
+
+
+
     <script src="{% static 'plugins1/common/common.min.js' %}"></script>
     <script src="{% static 'js1/custom.min.js' %}"></script>
     <script src="{% static 'js1/settings.js' %}"></script>
@@ -315,9 +362,9 @@
                 alert.classList.add('fade');
                 setTimeout(function() {
                     alert.remove();
-                }, 150); // Adjust this timing as needed
+                }, 150); 
             }
-        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+        }, 2000); 
     </script>
 
 </body>

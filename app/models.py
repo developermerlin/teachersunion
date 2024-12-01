@@ -120,3 +120,96 @@ class Finance_Message(models.Model):
         return  self.message_subject
 
 
+class Administrative_Budget(models.Model):
+    name = models.CharField(max_length=300)
+    budget_date =  models.DateField()
+    executive_salary = models.DecimalField(max_digits=10, decimal_places=2)
+    admin_salary = models.DecimalField(max_digits=10, decimal_places=2)
+    leave_allowance =  models.DecimalField(max_digits=10, decimal_places=2)
+    acting_allowance = models.DecimalField(max_digits=10, decimal_places=2)
+    on_the_job_training = models.DecimalField(max_digits=10, decimal_places=2)
+    paye_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    security_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    audit_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    fuel_cost =  models.DecimalField(max_digits=10, decimal_places=2)
+    internal_transport =  models.DecimalField(max_digits=10, decimal_places=2)
+    light_bill =  models.DecimalField(max_digits=10, decimal_places=2)
+    water_rate =  models.DecimalField(max_digits=10, decimal_places=2)
+    labor_affiliate = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.name}  - {self.budget_date}"
+    def get_total_budget(self):
+        return (
+            self.executive_salary +
+            self.admin_salary +
+            self.leave_allowance +
+            self.acting_allowance +
+            self.on_the_job_training +
+            self.paye_cost +
+            self.security_cost +
+            self.audit_cost +
+            self.fuel_cost +
+            self.internal_transport +
+            self.light_bill +
+            self.water_rate +
+            self.labor_affiliate 
+           
+        )
+    
+
+class Teacher_Welfare(models.Model):
+    name = models.CharField(max_length=300)
+    budget_date =  models.DateField()
+    
+    
+    def __str__(self):
+        return f"{self.name}  - {self.budget_date}"
+    def get_total_budget(self):
+        return (
+            self.executive_salary +
+            self.admin_salary +
+            self.leave_allowance +
+            self.acting_allowance +
+            self.on_the_job_training +
+            self.paye_cost +
+            self.security_cost +
+            self.audit_cost +
+            self.fuel_cost +
+            self.internal_transport +
+            self.light_bill +
+            self.water_rate +
+            self.labor_affiliate 
+           
+        )
+    
+
+class Salary_Allowance(models.Model):
+    name = models.CharField(max_length=200)
+    payment_date = models.DateField()
+    expenditure_type = models.CharField(max_length=200)
+    staff_position = models.CharField(max_length=120)
+    payment_cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+    
+
+class Statutory_Deduction(models.Model):
+    name = models.CharField(max_length=200)
+    payment_date = models.DateField(null=True, blank=True)
+    deduction_type = models.CharField(max_length=200, null=True, blank=True)
+    staff_position = models.CharField(max_length=120)
+    payment_cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+    
+class Running_Cost(models.Model):
+    name = models.CharField(max_length=200)
+    payment_date = models.DateField(null=True, blank=True)
+    deduction_type = models.CharField(max_length=200, null=True, blank=True)
+    payment_cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name

@@ -36,12 +36,33 @@ urlpatterns = [
     path('edit_message_to_president/<int:president_id>/', views.edit_message_to_president, name='edit_message_to_president'),
     path('delete_message_to_president/delete/<int:president_id>/', views.delete_message_to_president, name='delete_message_to_president'),
 
+    path('message_from_finance/', views.message_from_finance, name='message_from_finance'),
+    path('view_message_from_finance/<int:teacher_id>/', views.view_message_from_finance, name='view_message_from_finance'),
+
+    path('admin_expenditure/', views.admin_expenditure, name='admin_expenditure'),
+    path('salary_allowance/',views.salary_allowance, name='salary_allowance'),
+    path('allowances/<int:pk>/update/', views.update_salary_allowance, name='update_salary_allowance'),
+    path('allowances/<int:pk>/delete/', views.delete_salary_allowance, name='delete_salary_allowance'),
 
 
+    path('statutory_deduction/',views.statutory_deduction, name='statutory_deduction'),
+    path('deduction/<int:pk>/update/', views.update_statutory_deduction, name='update_statutory_deduction'),
+    path('deduction/<int:pk>/delete/', views.delete_statutory_deduction, name='delete_statutory_deduction'),
+
+    path('running_cost/',views.running_cost, name='running_cost'),
+    path('running_cost/<int:pk>/update/', views.update_running_cost, name='update_running_cost'),
+    path('running_cost/<int:pk>/delete/', views.delete_running_cost, name='delete_running_cost'),
 
 
+    path('president_expenditure/', views.president_expenditure, name='president_expenditure'),
+    path('president_salary_allowance/',views.president_salary_allowance, name='president_salary_allowance'),
+    path('president_statutory_deduction/',views.president_statutory_deduction, name='president_statutory_deduction'),
+    path('president_running_cost/',views.president_running_cost, name='president_running_cost'),
+    
 
-
+    path('all_salary_allowance/', views.all_salary_allowance, name='all_salary_allowance'),
+    path('all_statutory_deduction/', views.all_statutory_deduction, name='all_statutory_deduction'),
+     path('all_running_cost/', views.all_running_cost, name='all_running_cost'),
 
 
 ]
