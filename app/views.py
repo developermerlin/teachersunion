@@ -28,10 +28,16 @@ def president(request):
     teachers = Teacher.objects.all().count()
     budget = Budget.objects.all().count()
     message = Finance_Message.objects.all().count()
+    salary_allowance = Salary_Allowance.objects.all().count()
+    statutory_deduction = Statutory_Deduction.objects.all().count()
+    running_cost = Running_Cost.objects.all().count()
     context = {
         'teachers':teachers,
         'budget':budget,
         'message':message,
+        'salary_allowance':salary_allowance,
+        'statutory_deduction':statutory_deduction,
+        'running_cost':running_cost
     }
     return render(request, 'president.html',context)
 
@@ -908,3 +914,68 @@ def president_running_cost(request):
 def all_running_cost(request):
     salary_allowance = Running_Cost.objects.all()
     return render(request, 'all_running_cost.html',{'salary_allowance':salary_allowance})
+
+
+
+from django.db.models import Sum
+
+def salary_allowance_report(request):
+    salary_allowance = Salary_Allowance.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_salary_allowance.html', context)
+
+def statutory_report(request):
+    salary_allowance = Statutory_Deduction.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_statutory_deduction.html', context)
+
+
+def runningcost_report(request):
+    salary_allowance = Running_Cost.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_running_cost.html', context)
+
+
+
+def teacher_expenditure(request):
+    return render(request, 'teacher_expenditure.html')
+

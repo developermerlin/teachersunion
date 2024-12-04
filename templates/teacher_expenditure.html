@@ -20,30 +20,6 @@
     <!-- Custom Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
-    <style>
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .table, .table * {
-                visibility: visible;
-                font-size: 25px;
-                margin-left: -100px;
-                
-            }
-            .table {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-            }
-            .card{
-                width: 100%;
-                height: 100%;
-            }
-        }
-        </style>
 </head>
 
 <body>
@@ -132,7 +108,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president' %}">Dashboard</a></li>
+                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -140,7 +116,7 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
@@ -148,7 +124,7 @@
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
+                            <li><a href="{% url 'budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
@@ -156,7 +132,7 @@
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_expenditure' %}">Administration</a></li>
+                            <li><a href="table-datatable.html">Administration</a></li>
                             <li><a href="table-datatable.html">Teachers Welfare</a></li>
 
                         </ul>
@@ -164,11 +140,11 @@
 
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Messages</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
-                            <li><a href="{% url 'message_from_finance' %}">Finance Messages</a></li>
+                            <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
+
                         </ul>
                     </li>
                 </ul>
@@ -210,74 +186,42 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <!-- templates/salary_allowance_list.html -->
-<table class="table table-striped">
-    <h2 class="text-center mb-5">Office Running Cost</h2>
-    <thead>
-        <tr>
-            <th style="color:black;">No</th>
-            <th style="color:black;">Staff Name</th>
-            <th style="color:black;">Payment Date</th>
-            <th style="color:black;">Cost Type</th>
-            <th style="color:black;">Payment Cost</th>
-        </tr>
-    </thead>
-
-    <div class="mt-3">
-        <td style="color:black; text-align:center" colspan="6">
-            <h2 class="text-center mb-5">Office Running Cost Report</h2>
-        </td>
-
-       
-    </div>
-    <tbody>
-        {% for sal in salary_allowance %}
-        <tr>
-            <td style="color:black;">{{ forloop.counter }}</td>
-            <td style="color:black;">{{ sal.name }}</td>
-            <td style="color:black;">{{ sal.payment_date }}</td>
-            <td style="color:black;">{{ sal.deduction_type }}</td>
-            <td style="color:black;">Nle{{ sal.payment_cost }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="6">No data available</td>
-        </tr>
-        {% endfor %}
-
-        <div class="mt-3">
-            <td style="color:black; text-align:center" colspan="6">
-                <h3>Total Salaries and Allowance Paid: Nle {{ total_payment_cost }}</h3>
-            </td>
-        </div>
-    </tbody>
-
-    <a href="#" class="btn btn-outline-secondary" onclick="window.print()" style="margin-bottom: 50px;">
-        <i class="fa fa-print" aria-hidden="true"></i>
-        <span class="ms-1">Print Report</span>
-    </a>
-
-    <form method="get" class="mb-4" >
-        <div class="row">
-            <div class="col-md-4">
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
-            </div>
-            <div class="col-md-4">
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
-            </div>
-            <div class="col-md-4 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">Filter</button>
-                <a href="{% url 'runningcost_report' %}" class="btn btn-secondary ml-2">Reset</a>
-            </div>
-        </div>
-    </form>
-</table>
-
-                                
-                                
-                                
+                                <h3>Recurrent Administrative Budgeted Head</h3>
+                              
+                                {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show w-50" role="alert" 
+                                        style="position: relative; margin-left: 250px;">
+                                        <strong style="margin-left: 140px;">{{ message }}</strong> 
+                                        
+                                    </div>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                               <div class="container">
+                                <div class="row" style="margin-top: 120px;">
+                                    <div class="col-md-4">
+                                        <a href="{% url 'salary_allowance' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Salary and Allowances</h3>
+                                        </a>
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{% url 'statutory_deduction' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Statutory Deduction</h3>
+                                        </a>
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{% url 'running_cost' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Office Running Cost</h3>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -285,8 +229,7 @@
 
 
                   
-                 
-                    
+
 
   
 
@@ -357,9 +300,9 @@
                 alert.classList.add('fade');
                 setTimeout(function() {
                     alert.remove();
-                }, 150); // Adjust this timing as needed
+                }, 150); 
             }
-        }, 2000); // Time in milliseconds before the alert disappears (e.g., 3000ms = 3 seconds)
+        }, 2000); 
     </script>
 
 </body>

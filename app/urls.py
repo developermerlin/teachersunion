@@ -62,7 +62,16 @@ urlpatterns = [
 
     path('all_salary_allowance/', views.all_salary_allowance, name='all_salary_allowance'),
     path('all_statutory_deduction/', views.all_statutory_deduction, name='all_statutory_deduction'),
-     path('all_running_cost/', views.all_running_cost, name='all_running_cost'),
+    path('all_running_cost/', views.all_running_cost, name='all_running_cost'),
+
+
+    path('salary-allowance-report/', views.salary_allowance_report, name='salary_allowance_report'),
+    path('statutory_report/', views.statutory_report, name='statutory_report'),
+    path('runningcost_report/', views.runningcost_report, name='runningcost_report'),
+
+
+    path('teacher_expenditure/', views.teacher_expenditure, name='teacher_expenditure'),
+
 
 
 ]
