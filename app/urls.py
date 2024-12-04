@@ -93,6 +93,18 @@ urlpatterns = [
     path('education/<int:pk>/delete/', views.delete_education_assistance, name='delete_education_assistance'),
 
 
+    path('president_teacher_expenditure/', views.president_teacher_expenditure, name='president_teacher_expenditure'),
+    path('president_medical_assistance/', views.president_medical_assistance, name='president_medical_assistance'),
+    path('president_financial_assistance/', views.president_financial_assistance, name='president_financial_assistance'),
+    path('president_berievement_assistance/', views.president_berievement_assistance, name='president_berievement_assistance'),
+    path('president_education_assistance/', views.president_education_assistance, name='president_education_assistance'),
+
+
+
+
+   
+
+
 
 ]
 

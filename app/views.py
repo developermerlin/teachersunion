@@ -1198,3 +1198,118 @@ def delete_education_assistance(request, pk):
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
     return render(request, 'delete_education_assistance.html', {'allowance': allowance})
+
+
+
+def president_teacher_expenditure(request):
+    return render(request, 'president_teacher_expenditure.html')
+
+
+def president_medical_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Medical_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Medical Allowance created successfully!")
+            return redirect('president_medical_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_medical_assistance = Medical_Assistance.objects.all()
+    return render(request, 'president_medical_assistance.html',{'president_medical_assistance':president_medical_assistance})
+
+
+def president_financial_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Financial_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Financial Allowance created successfully!")
+            return redirect('president_financial_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_financial_assistance = Financial_Assistance.objects.all()
+    return render(request, 'president_financial_assistance.html',{'president_financial_assistance':president_financial_assistance})
+
+
+def president_education_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Education_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Education Allowance created successfully!")
+            return redirect('president_education_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_education_assistance = Education_Assistance.objects.all()
+    return render(request, 'president_education_assistance.html',{'president_education_assistance':president_education_assistance})
+
+
+def president_medical_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Medical_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Medical Allowance created successfully!")
+            return redirect('president_medical_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_medical_assistance = Medical_Assistance.objects.all()
+    return render(request, 'medical_assistance.html',{'president_medical_assistance':president_medical_assistance})
+
+
+def president_berievement_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Berievement_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Berievement Allowance created successfully!")
+            return redirect('president_berievement_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    president_berievement_assistance = Berievement_Assistance.objects.all()
+    return render(request, 'president_berievement_assistance.html',{'president_berievement_assistance':president_berievement_assistance})

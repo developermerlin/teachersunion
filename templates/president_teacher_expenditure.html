@@ -45,7 +45,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="{% url 'finance' %}">
+                <a href="index-2.html">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -186,20 +186,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Salary and Allowance</h3>
-                                <div class="container">
-                                    <div class="row" style="margin-top: 10px;">
-                                        <div class="col-md-12" style="margin-left: 850px;">
-                                            <a href="{% url 'all_salary_allowance' %}" class="btn btn-outline-secondary">
-                                                <i class="fa fa-print" aria-hidden="true"></i>
-                                                <span class="ms-1">view Report</span> 
-                                            </a>
-
-
-                                        </div>
-                                      
-                                    </div>
-                                </div>
+                                <h3>Recurrent Teachers Welfare Budgeted Head</h3>
+                              
                                 {% if messages %}
                                 <ul>
                                     {% for message in messages %}
@@ -212,50 +200,39 @@
                                     {% endfor %}
                                 </ul>
                             {% endif %}
-                                <div class="table-responsive" style="margin-top: 50px;">
-                                    <table class="table table-striped table-bordered zero-configuration">
-                                        <thead>
-                                            <tr>
-                                                <th style="font-size: 16px; color:black; text-align: center;">No</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Name</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Date</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Expenditure Type</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Position</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Payment Cost</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Action</th>
-                                               
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for sal in president_salary_allowance %}
-                                            
-                                            <tr>
-                                                <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
-                                                
-                                                <td style="font-size: 16px; color:black;">{{sal.name}}</td>
-                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.payment_date}}</td>
-                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.expenditure_type}}</td>
-                                                <td style="font-size: 16px; color:black;">{{sal.staff_position}}</td>
-                                                <td style="font-size: 16px; color:black; text-align:center">Le{{sal.payment_cost}}</td>
-                                                
-                                              
-                                                <td style="text-align: center;">
-                                                    <a href="" >
-                                                        <i class="fas fa-eye" style="color: rgb(5, 94, 43); margin-right: 5px;"></i>
-                                                      </a>
-
-                                                      
-
-                                                </td>
-                                              
-                                            </tr>
-                                          {% endfor %}
-                                        </tbody>
-                                        <tfoot>
+                               <div class="container">
+                                <div class="row" style="margin-top: 120px;">
+                                    <div class="col-md-6">
+                                        <a href="{% url 'president_medical_assistance' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Medical Assistance</h3>
+                                        </a>
                                         
-                                        </tfoot>
-                                    </table>
+                                    </div>
+                                   
+
+                                    <div class="col-md-6" >
+                                        <a href="{% url 'president_berievement_assistance' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Berievement Assistance</h3>
+                                        </a>
+                                        
+                                    </div>
                                 </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <a href="{% url 'president_financial_assistance' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Financial Assistance</h3>
+                                        </a>
+                                        
+                                    </div>
+                                    <div class="col-md-6" >
+                                        <a href="{% url 'president_education_assistance' %}" class="btn btn-lg btn-primary p-5">
+                                            <h3 style="color: white;">Education Assistance</h3>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -266,8 +243,7 @@
 
 
   
-                 
-  </div>
+
                 </div>
             </div>
            
@@ -289,40 +265,13 @@
             Footer end
         ***********************************-->
     </div>
-  
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
 
-    <script>
-        document.getElementById('display-salary-btn').addEventListener('click', function () {
-            fetch('/display-salaries/', {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest' // Identify this as an AJAX request
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                // Insert the returned HTML into the div
-                document.getElementById('salary-content').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Error fetching salaries:', error);
-                alert('Failed to load data. Please try again.');
-            });
-        });
-    </script>
-    
-    
-
-
-
-
-
-
+    <!--**********************************
+        Scripts
+    ***********************************-->
     <script src="{% static 'plugins1/common/common.min.js' %}"></script>
     <script src="{% static 'js1/custom.min.js' %}"></script>
     <script src="{% static 'js1/settings.js' %}"></script>
