@@ -131,9 +131,10 @@
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
+                        
                         <ul aria-expanded="false">
                             <li><a href="{% url 'admin_expenditure' %}">Administration</a></li>
-                            <li><a href="{% url 'teacher_expenditure' %}">Teachers Welfare</a></li>
+                            <li><a href="">Teachers Welfare</a></li>
 
                         </ul>
                     </li>
@@ -186,13 +187,13 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Statutory Deduction</h3>
+                                <h3>Teachers Financial Assistance</h3>
                                 <div class="container">
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-12" style="margin-left: 850px;">
                                             <a href="" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter">
                                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                                <span class="ms-1">Statutory Deduction</span> 
+                                                <span class="ms-1">Financial Assistance</span> 
                                             </a>
                                         </div>
                                     </div>
@@ -216,32 +217,30 @@
                                                 <th style="font-size: 16px; color:black; text-align: center;">No</th>
                                                 <th style="font-size: 16px; color:black; text-align: center;">Staff Name</th>
                                                 <th style="font-size: 16px; color:black; text-align: center;">Payment Date</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Deduction Type</th>
-                                                <th style="font-size: 16px; color:black; text-align: center;">Staff Position</th>
+                                                <th style="font-size: 16px; color:black; text-align: center;">welfare Type</th>
                                                 <th style="font-size: 16px; color:black; text-align: center;">Payment Cost</th>
                                                 <th style="font-size: 16px; color:black; text-align: center;">Action</th>
                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for sal in statutory_deduction %}
+                                            {% for sal in financial_assistance %}
                                             
                                             <tr>
                                                 <td style="font-size: 16px; color:black; text-align:center">{{forloop.counter}}</td>
                                                 
                                                 <td style="font-size: 16px; color:black;">{{sal.name}}</td>
                                                 <td style="font-size: 16px; color:black; text-align:center">{{sal.payment_date}}</td>
-                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.deduction_type}}</td>
-                                                <td style="font-size: 16px; color:black;">{{sal.staff_position}}</td>
+                                                <td style="font-size: 16px; color:black; text-align:center">{{sal.welfare_type}}</td>
                                                 <td style="font-size: 16px; color:black; text-align:center">Le{{sal.payment_cost}}</td>
                                                 
                                               
                                                 <td style="text-align: center;">
-                                                    <a href="{% url 'update_statutory_deduction' sal.id%}" >
+                                                    <a href="{% url 'update_financial_assistance' sal.id%}" >
                                                         <i class="fas fa-pen" style="color: rgb(5, 94, 43); margin-right: 5px;"></i>
                                                       </a>
 
-                                                      <a href="{%url 'delete_statutory_deduction' sal.id%}" >
+                                                      <a href="{%url 'delete_financial_assistance' sal.id%}" >
                                                         <i class="fas fa-trash" style="color: rgb(182, 10, 10);"></i>
                                                       </a>
 
@@ -270,7 +269,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLongTitle">Statutory Deduction</h3>
+          <h3 class="modal-title" id="exampleModalLongTitle">Financial Welfare</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -281,7 +280,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6" style="margin-top: 20px;">
-                           <input class="form-control shadow-none p-2" name="name" type="text" placeholder="Name" style="border: 1px solid black;">
+                           <input class="form-control shadow-none p-2" name="name" type="text" placeholder="Name of Staff" style="border: 1px solid black;">
                         </div>
             
 
@@ -295,30 +294,18 @@
 
             
                     <div class="row mt-3">
-                       <div class="col-md-4">
-                        <select name="deduction_type"  class="form-control" style="border: 1px solid black;">
-                            <option value="">Deduction Type</option>
-                            <option value="PAYE to NASSIT">PAYE to NASSIT</option>
-                            <option value="Security Firm">Security Firm</option>
-                            <option value="Audit Firm">Audit Firm</option>
-                            <option value="Audit Firm">Affiliate Fee</option>
+                       <div class="col-md-6">
+                        <select name="welfare_type"  class="form-control" style="border: 1px solid black;">
+                            <option value="">Welfare Type</option>
+                            <option value="Medical">Medical</option>
+                            <option value="Education">Education</option>
+                            <option value="Financial">Financial</option>
+                            <option value="Berievement">Berievement</option>
                           </select>                        
                         </div>
 
-                       
-                            <div class="col-md-4">
-                                <select name="staff_position" class="form-control" style="border: 1px solid black;">
-                                    <option value="">Staff Position</option>
-                                    <option value="Finance Officer">Finance Officer</option>
-                                    <option value="President">President</option>
-                                    <option value="Secretary General">Secretary General</option>
-                                    <option value="Security">Security</option>
-                                    <option value="Security">Teachers Union</option>
-                                  </select>                        
-                                </div>
-
-                                <div class="col-md-4">
-                                    <input type="number" class="form-control shadow-none p-4" name="payment_cost" style="border: 1px solid black;" placeholder="Deduction Cost" required>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control shadow-none p-4" name="payment_cost" style="border: 1px solid black;" placeholder="Financial Cost" required>
         
                                 </div> 
                         </div> 
@@ -335,7 +322,7 @@
  
                          <div class="col-md-6 offset-md-3">
                             <button type="submit" class="btn btn-success p-3 w-100 text-white">
-                                <i class="fas fa-database"></i> Add Budget
+                                <i class="fas fa-database"></i> Add Financial Welfare
                             </button>
  
                          </div> 

@@ -132,7 +132,7 @@
                             <i class="menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president' %}">Dashboard</a></li>
+                            <li><a href="{% url 'finance' %}">Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -140,7 +140,7 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Teachers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_teachers' %}">All Teachers</a></li>
+                            <li><a href="{% url 'finance_teachers' %}">All Teachers</a></li>
                         </ul>
                     </li>
                     <li>
@@ -148,7 +148,7 @@
                             <i class="icon-note menu-icon"></i><span class="nav-text">Budget</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_budget' %}">All budget</a></li>
+                            <li><a href="{% url 'budget' %}">All budget</a></li>
                         </ul>
                     </li>
                     <li>
@@ -156,19 +156,19 @@
                             <i class="icon-menu menu-icon"></i><span class="nav-text">Recurrent Expenditure</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_expenditure' %}">Administration</a></li>
-                            <li><a href="table-datatable.html">Teachers Welfare</a></li>
+                            <li><a href="{% url 'admin_expenditure' %}">Administration</a></li>
+                            <li><a href="{% url 'teacher_expenditure' %}">Teachers Welfare</a></li>
 
                         </ul>
                     </li>
 
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" style="font-size: 18px;" onclick="toggleDropdown(this)" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Messages</span>
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Messages</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'president_messages' %}">All Messages</a></li>
-                            <li><a href="{% url 'message_from_finance' %}">Finance Messages</a></li>
+                            <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
+
                         </ul>
                     </li>
                 </ul>

@@ -72,6 +72,26 @@ urlpatterns = [
 
     path('teacher_expenditure/', views.teacher_expenditure, name='teacher_expenditure'),
 
+    path('medical_assistance/', views.medical_assistance, name='medical_assistance'),
+    path('medical/<int:pk>/update/', views.update_medical_assistance, name='update_medical_assistance'),
+    path('medical/<int:pk>/delete/', views.delete_medical_assistance, name='delete_medical_assistance'),
+
+
+
+    path('financial_assistance/', views.financial_assistance, name='financial_assistance'),
+    path('financial/<int:pk>/update/', views.update_financial_assistance, name='update_financial_assistance'),
+    path('financial/<int:pk>/delete/', views.delete_financial_assistance, name='delete_financial_assistance'),
+ 
+
+    path('berievement_assistance/', views.berievement_assistance, name='berievement_assistance'),
+    path('berievement/<int:pk>/update/', views.update_berievement_assistance, name='update_berievement_assistance'),
+    path('berievement/<int:pk>/delete/', views.delete_berievement_assistance, name='delete_berievement_assistance'),
+
+
+    path('education_assistance/', views.education_assistance, name='education_assistance'),
+    path('education/<int:pk>/update/', views.update_education_assistance, name='update_education_assistance'),
+    path('education/<int:pk>/delete/', views.delete_education_assistance, name='delete_education_assistance'),
+
 
 
 ]

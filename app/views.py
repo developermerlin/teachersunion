@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from datetime import datetime
-from .models import Teacher, Budget, President_Message,Finance_Message,Salary_Allowance,Statutory_Deduction,Running_Cost
+from .models import Teacher, Budget, President_Message,Finance_Message,Salary_Allowance,Statutory_Deduction,Running_Cost,Medical_Assistance,Financial_Assistance,Berievement_Assistance,Education_Assistance
 # Create your views here.
 
 def home1(request):
@@ -979,3 +979,222 @@ def runningcost_report(request):
 def teacher_expenditure(request):
     return render(request, 'teacher_expenditure.html')
 
+
+
+def medical_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Medical_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Medical Allowance created successfully!")
+            return redirect('medical_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    medical_assistance = Medical_Assistance.objects.all()
+    return render(request, 'medical_assistance.html',{'medical_assistance':medical_assistance})
+
+
+def update_medical_assistance(request, pk):
+    allowance = get_object_or_404(Medical_Assistance, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.welfare_type = welfare_type
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Medical Welfare updated successfully!")
+            return redirect('medical_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_medical_assistance.html', {'allowance': allowance})
+
+def delete_medical_assistance(request, pk):
+    allowance = get_object_or_404(Medical_Assistance, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Medical Allowance deleted successfully!")
+            return redirect('medical_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_medical_assistance.html', {'allowance': allowance})
+
+
+def financial_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Financial_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Financial Allowance created successfully!")
+            return redirect('financial_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    financial_assistance = Financial_Assistance.objects.all()
+    return render(request, 'financial_assistance.html',{'financial_assistance':financial_assistance})
+
+
+def update_financial_assistance(request, pk):
+    allowance = get_object_or_404(Financial_Assistance, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.welfare_type = welfare_type
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Financial Welfare updated successfully!")
+            return redirect('financial_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_financial_assistance.html', {'allowance': allowance})
+
+def delete_financial_assistance(request, pk):
+    allowance = get_object_or_404(Financial_Assistance, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Financial Allowance deleted successfully!")
+            return redirect('financial_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_financial_assistance.html', {'allowance': allowance})
+
+
+def berievement_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Berievement_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Berievement Allowance created successfully!")
+            return redirect('berievement_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    berievement_assistance = Berievement_Assistance.objects.all()
+    return render(request, 'berievement_assistance.html',{'berievement_assistance':berievement_assistance})
+
+
+def update_berievement_assistance(request, pk):
+    allowance = get_object_or_404(Berievement_Assistance, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.welfare_type = welfare_type
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Berievement Welfare updated successfully!")
+            return redirect('berievement_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_berievement_assistance.html', {'allowance': allowance})
+
+
+def delete_berievement_assistance(request, pk):
+    allowance = get_object_or_404(Berievement_Assistance, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Berievement Allowance deleted successfully!")
+            return redirect('berievement_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_berievement_assistance.html', {'allowance': allowance})
+
+
+
+def education_assistance(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            Education_Assistance.objects.create(
+                name=name,
+                payment_date=payment_date,
+                welfare_type=welfare_type,
+                payment_cost=payment_cost
+            )
+            messages.success(request, "Education Allowance created successfully!")
+            return redirect('education_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    education_assistance = Education_Assistance.objects.all()
+    return render(request, 'education_assistance.html',{'education_assistance':education_assistance})
+
+
+def update_education_assistance(request, pk):
+    allowance = get_object_or_404(Education_Assistance, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        payment_date = request.POST.get('payment_date')
+        welfare_type = request.POST.get('welfare_type')
+        payment_cost = request.POST.get('payment_cost')
+
+        try:
+            allowance.name = name
+            allowance.payment_date = payment_date
+            allowance.welfare_type = welfare_type
+            allowance.payment_cost = payment_cost
+            allowance.save()
+            messages.success(request, "Eduaction Welfare updated successfully!")
+            return redirect('education_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'update_education_assistance.html', {'allowance': allowance})
+
+
+def delete_education_assistance(request, pk):
+    allowance = get_object_or_404(Education_Assistance, pk=pk)
+    if request.method == 'POST':
+        try:
+            allowance.delete()
+            messages.success(request, "Education Allowance deleted successfully!")
+            return redirect('education_assistance')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {e}")
+    return render(request, 'delete_education_assistance.html', {'allowance': allowance})
