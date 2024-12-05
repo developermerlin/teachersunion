@@ -16,9 +16,11 @@ def secretary(request):
 def finance(request):
     teachers = Teacher.objects.all().count()
     budget = Budget.objects.all().count()
+    message = President_Message.objects.all().count()
     context = {
         'teachers':teachers,
         'budget':budget,
+        'message':message,
     }
 
     return render(request, 'finance.html',context)
@@ -1290,7 +1292,7 @@ def president_medical_assistance(request):
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
     president_medical_assistance = Medical_Assistance.objects.all()
-    return render(request, 'medical_assistance.html',{'president_medical_assistance':president_medical_assistance})
+    return render(request, 'president_medical_assistance.html',{'president_medical_assistance':president_medical_assistance})
 
 
 def president_berievement_assistance(request):
@@ -1313,3 +1315,96 @@ def president_berievement_assistance(request):
             messages.error(request, f"An error occurred: {e}")
     president_berievement_assistance = Berievement_Assistance.objects.all()
     return render(request, 'president_berievement_assistance.html',{'president_berievement_assistance':president_berievement_assistance})
+
+
+
+
+def all_president_medical_assistance(request):
+    salary_allowance = Medical_Assistance.objects.all()
+    return render(request, 'all_president_medical_assistance.html',{'salary_allowance':salary_allowance})
+
+def medical_report(request):
+    salary_allowance = Medical_Assistance.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_president_medical_assistance.html', context)
+
+def all_president_education_assistance(request):
+    salary_allowance = Education_Assistance.objects.all()
+    return render(request, 'all_president_education_assistance.html',{'salary_allowance':salary_allowance})
+
+def educational_report(request):
+    salary_allowance = Education_Assistance.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_president_education_assistance.html', context)
+
+
+def all_president_berievement_assistance(request):
+    salary_allowance = Berievement_Assistance.objects.all()
+    return render(request, 'all_president_berievement_assistance.html',{'salary_allowance':salary_allowance})
+
+def berievement_report(request):
+    salary_allowance = Berievement_Assistance.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_president_berievement_assistance.html', context)
+
+
+def all_president_financial_assistance(request):
+    salary_allowance = Financial_Assistance.objects.all()
+    return render(request, 'all_president_financial_assistance.html',{'salary_allowance':salary_allowance})
+
+def financial_report(request):
+    salary_allowance = Financial_Assistance.objects.all()
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        salary_allowance = salary_allowance.filter(payment_date__range=[start_date, end_date])
+
+    total_payment_cost = salary_allowance.aggregate(Sum('payment_cost'))['payment_cost__sum'] or 0
+
+    context = {
+        'salary_allowance': salary_allowance,
+        'total_payment_cost': total_payment_cost,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'all_president_financial_assistance.html', context)

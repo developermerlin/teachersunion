@@ -100,6 +100,19 @@ urlpatterns = [
     path('president_education_assistance/', views.president_education_assistance, name='president_education_assistance'),
 
 
+    path('all_president_medical_assistance/', views.all_president_medical_assistance, name='all_president_medical_assistance'),
+    path('all_president_financial_assistance/', views.all_president_financial_assistance, name='all_president_financial_assistance'),
+    path('all_president_berievement_assistance/', views.all_president_berievement_assistance, name='all_president_berievement_assistance'),
+    path('all_president_education_assistance/', views.all_president_education_assistance, name='all_president_education_assistance'),
+
+
+    path('medical_report/', views.medical_report, name='medical_report'),
+    path('financial_report/', views.financial_report, name='financial_report'),
+    path('educational_report/', views.educational_report, name='educational_report'),
+    path('berievement_report/', views.berievement_report, name='berievement_report'),
+  
+
+
 
 
    
