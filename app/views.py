@@ -2,10 +2,39 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from datetime import datetime
 from .models import Teacher, Budget, President_Message,Finance_Message,Salary_Allowance,Statutory_Deduction,Running_Cost,Medical_Assistance,Financial_Assistance,Berievement_Assistance,Education_Assistance
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 def home1(request):
     return render(request, 'home1.html')
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib import messages
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth_login(request, user)  # Use the built-in login function
+
+            # Redirect based on user permissions
+            if user.is_superuser:
+                return redirect('secretary')  # URL name for secretary dashboard
+            elif user.is_staff:
+                return redirect('finance')  # URL name for finance dashboard
+            elif user.is_active:
+                return redirect('president')  # URL name for president dashboard
+            else:
+                messages.error(request, 'You do not have permission to access this system.')
+                return redirect('login')
+        else:
+            messages.error(request, 'Invalid username or password')
+    return render(request, 'accounts/login.html')
+
 
 def secretary(request):
     teachers_counts = Teacher.objects.all().count()

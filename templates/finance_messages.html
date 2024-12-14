@@ -45,7 +45,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="{% url 'president' %}">
+                <a href="{% url 'finance' %}">
                     <b><h4 style="color: white; margin-left: 20px;">Teachers Union</h4> </b>
                  
                 </a>
@@ -145,6 +145,8 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{% url 'finance_messages' %}">All Messages</a></li>
+                            <li><a href="{% url 'message_to_president' %}">All Messages</a></li>
+                            
 
                         </ul>
                     </li>
@@ -188,6 +190,16 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3>Messages From President</h3>
+                                <div class="container">
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-12" style="margin-left: 950px;">
+                                            <a href="{% url  'message_to_president'%}" class="btn btn-outline-secondary" >
+                                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                                <span class="ms-1">Compose a Message</span> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                                
                                 {% if messages %}
                                 <ul>

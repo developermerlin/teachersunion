@@ -131,4 +131,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'secretary'  # Redirect to a view name after login
-LOGOUT_REDIRECT_URL = 'home1'  # Redirect to a view name after logout
+LOGOUT_REDIRECT_URL = 'login'  # Redirect to a view name after logout
